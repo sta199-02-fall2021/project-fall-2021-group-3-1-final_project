@@ -1,0 +1,30 @@
+---
+title: "Project Proposal"
+subtitle: "due October 15, 2021 by 11:59 PM "
+author: "Your names here"
+date: ""
+output: pdf_document
+---
+
+# Load Packages
+
+```{r load-packages, message = FALSE, warning = FALSE}
+library(tidyverse) 
+``` 
+
+# Load Data
+```{r load-data, message = F}
+
+```
+
+# Introduction and Data
+
+Please introduce and discuss your data here.
+
+# Research Questions
+
+Please discuss your research questions here.
+
+# Glimpse
+
+Please use `glimpse` for your datasets here.
