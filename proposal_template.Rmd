@@ -1,8 +1,8 @@
 ---
 title: "Project Proposal"
 subtitle: "due October 15, 2021 by 11:59 PM "
-author: "Your names here"
-date: ""
+author: "Sonya Patel, Aimi Wen, Ethan, and Luca"
+date: "10/8/21"
 output: pdf_document
 ---
 
@@ -14,12 +14,19 @@ library(tidyverse)
 
 # Load Data
 ```{r load-data, message = F}
-
+ movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
+raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
 ```
 
 # Introduction and Data
 
-Please introduce and discuss your data here.
+# Bechdel Test
+The Bechdel Test is coined by Alison Bechdel states that if a movie can satisfy three criteria — there are at least two named women in the picture, they have a conversation with each other at some point, and that conversation isn’t about a male character — then it passes “The Rule,” whereby female characters are allocated a bare minimum of depth. Using the movies dataset and possibly joining it with the raw_bechdel data, we can observe trends and patterns in gender bias across different movies. 
+
+# Billboard 100
+
+
+
 
 # Research Questions
 
