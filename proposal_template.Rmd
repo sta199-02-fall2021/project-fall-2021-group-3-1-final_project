@@ -14,7 +14,7 @@ library(tidyverse)
 
 # Load Data
 ```{r load-data, message = F}
- movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
+movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
 ```
 
@@ -23,15 +23,20 @@ raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 # Bechdel Test
 The Bechdel Test is coined by Alison Bechdel states that if a movie can satisfy three criteria — there are at least two named women in the picture, they have a conversation with each other at some point, and that conversation isn’t about a male character — then it passes “The Rule,” whereby female characters are allocated a bare minimum of depth. Using the movies dataset and possibly joining it with the raw_bechdel data, we can observe trends and patterns in gender bias across different movies. The source of the data is FiveThirtyEight. The raw_bechdel.csv includes data from 1970 - 2020, for ONLY bechdel testing, while the movies.csv includes IMDB scores, budget/gross revenue, and ratings but only from 1970 - 2013. The cases are the movies. The data collected comes from the site BechdelTest.com, which is operated by committed moviegoers who analyze films and ascertain if they pass the Bechdel test. The financial information on these films comes from The-Numbers.com, a leading site for box office and budget data. 
 
-# Billboard 100
+# Survivor
 
 
 
 
 # Research Questions
 
-Please discuss your research questions here.
+Bechdel Test: What attributes and variables correlate to movies that fail the Bechdel test? What genre of movies fails the Bechdel Test most frequently? Do movies that pass the Bechdel test have a lower budget than those that fail? I hypothesize that more action movies fail the Bechdel test because many of them have few female characters that interact with one another and that movies with a lower budget pass the Bechdel test. 
 
 # Glimpse
 
 Please use `glimpse` for your datasets here.
+```{r}
+glimpse(movies)
+glimpse(raw_bechdel)
+```
+
