@@ -16,21 +16,48 @@ library(tidyverse)
 ```{r load-data, message = F}
 movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
+
+billboard <- 
+  readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
+audio_features <-
+  readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/audio_features.csv')
 ```
 
 # Introduction and Data
 
 # Bechdel Test
+
 The Bechdel Test is coined by Alison Bechdel states that if a movie can satisfy three criteria — there are at least two named women in the picture, they have a conversation with each other at some point, and that conversation isn’t about a male character — then it passes “The Rule,” whereby female characters are allocated a bare minimum of depth. Using the movies dataset and possibly joining it with the raw_bechdel data, we can observe trends and patterns in gender bias across different movies. The source of the data is FiveThirtyEight. The raw_bechdel.csv includes data from 1970 - 2020, for ONLY bechdel testing, while the movies.csv includes IMDB scores, budget/gross revenue, and ratings but only from 1970 - 2013. The cases are the movies. The data collected comes from the site BechdelTest.com, which is operated by committed moviegoers who analyze films and ascertain if they pass the Bechdel test. The financial information on these films comes from The-Numbers.com, a leading site for box office and budget data. 
 
 # Survivor
 
 
 
+# Billboard 100
+
+“The Billboard Hot 100 is the music industry standard record chart in the United States for songs, published weekly by Billboard magazine. Chart rankings are based on sales (physical and digital), radio play, and online streaming in the United States.”
+
+The data was found on TidyTuesday and is from Data.World with the original data points found on Billboard.com and Spotify. The cases are songs from the certain week(s) in which they appeared on the Billboard 100 chart. It includes every weekly Hot 100 singles chart from Billboard.com. Relevant variables from Billboard include song, performer, instance (ordinal for which appearance on the chart it is for the song), previous_week_position, and more. Relevant variables from Spotify include spotify_genre, spotify_track_duration, danceability (double 0-1; factoring in tempo, rhythm stability, beat strength), energy (double 0-1; perceptual measure of intensity and activity), key, acousticness (double 0-1), and valence (double 0-1; “musical positiveness”), and more. Both include a song_id that we anticipate will be used for joining.
 
 # Research Questions
 
-Bechdel Test: What attributes and variables correlate to movies that fail the Bechdel test? What genre of movies fails the Bechdel Test most frequently? Do movies that pass the Bechdel test have a lower budget than those that fail? I hypothesize that more action movies fail the Bechdel test because many of them have few female characters that interact with one another and that movies with a lower budget pass the Bechdel test. 
+# Bechdel Test
+
+What attributes and variables correlate to movies that fail the Bechdel test? What genre of movies fails the Bechdel Test most frequently? Do movies that pass the Bechdel test have a lower budget than those that fail? I hypothesize that more action movies fail the Bechdel test because many of them have few female characters that interact with one another and that movies with a lower budget pass the Bechdel test. 
+
+# Billboard 100
+
+Which audio features best predict a songs success on the Billboard 100 charts (peak or duration)?
+“Danceability will be the best predictors of a song’s duration, in weeks, on the Billboard 100 charts.”
+
+Does a song's number of appearances on the Billboard 100 charts make it more probable to reach a higher peak position?
+“There will be no correlation between a song’s number of appearances on the chart and it’s peak position.”
+
+Which song keys and modes are the most popular on Billboard 100 charts?
+“No key/mode combination will be significantly more popular than others on the Billboard 100 charts.”
+
+# Survivor 
+
 
 # Glimpse
 
@@ -38,5 +65,8 @@ Please use `glimpse` for your datasets here.
 ```{r}
 glimpse(movies)
 glimpse(raw_bechdel)
+
+glimpse(billboard)
+glimpse(audio_features)
 ```
 
