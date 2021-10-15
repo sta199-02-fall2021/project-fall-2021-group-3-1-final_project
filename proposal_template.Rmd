@@ -13,9 +13,25 @@ library(tidyverse)
 ``` 
 
 # Load Data
-```{r load-data, message = F}
+```{r load-data-for-bechdel, message= F}
 movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
+```
+
+```{r load-data-for-survivor, message= F}
+summary_survivor <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/summary.csv')
+
+challenges <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/challenges.csv')
+
+castaways <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/castaways.csv')
+
+viewers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/viewers.csv')
+
+jury_votes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/jury_votes.csv')
+
+```
+
+```{r load-data-for-billboard-100, message = F}
 
 billboard <- 
   readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
@@ -31,7 +47,9 @@ The Bechdel Test is coined by Alison Bechdel states that if a movie can satisfy 
 
 # Survivor
 
+Survivor is a show that  features a group of contestants that are given tribes and left in an isolated location, where they must provide food, water, fire, and shelter for themselves. The contestants compete in challenges for rewards and immunity from elimination. The contestants are progressively eliminated from the game as they are voted out by their fellow-contestants until only one remains to be awarded the grand prize of $1,000,000.
 
+This data was found on TidyTuesday, and the data package is originally from the survival package, which was created by Daniel Oehm. This data set consists of 5 different subgroups of data surrounding survivor the TV show which gives information on each season, including the players, series of challenges, how the players voted for the finalists, and the number of viewers of the show at different intervals. For all of these subgroups, the cases are the seasons, making it possible to join several of these datasets together. 
 
 # Billboard 100
 
@@ -43,20 +61,48 @@ The data was found on TidyTuesday and is from Data.World with the original data 
 
 # Bechdel Test
 
-What attributes and variables correlate to movies that fail the Bechdel test? What genre of movies fails the Bechdel Test most frequently? Do movies that pass the Bechdel test have a lower budget than those that fail? I hypothesize that more action movies fail the Bechdel test because many of them have few female characters that interact with one another and that movies with a lower budget pass the Bechdel test. 
+What attributes and variables correlate to movies that fail the Bechdel test? 
+
+I hypothesize that action movies and movies written by men would correlate with failing the Bechdel test. 
+
+What genre of movies fails the Bechdel Test most frequently? 
+
+I hypothesize that more action movies fail the Bechdel test because many of them have few female characters that interact with one another and are generally geared towards the male population. 
+
+Do movies that pass the Bechdel test have a lower budget than those that fail? 
+
+I hypothesize that movies with a lower budget pass the Bechdel test. 
+
+# Survivor 
+
+How do different factors such as age, home state, personality type influence how well a player does in a particular season?
+
+I hypothesize that younger people with more outgoing personality types and from home states that are famous for its nature will have a higher probability of winning. 
+
+How does the area of the world that the season was shot affect the popularity?
+
+I hypothesize that seasons with more well-known "dangerous" areas of the world are be more popular. For example, I hypothesize that Australia is one of the most popular seasons. 
+
+
+Correlation between winning different immunity/reward challenges and how this affects the success of the tribe?
+
+I hypothesize that the more wins a tribe has, the more successful the tribe would be. 
+
 
 # Billboard 100
 
 Which audio features best predict a songs success on the Billboard 100 charts (peak or duration)?
-“Danceability will be the best predictors of a song’s duration, in weeks, on the Billboard 100 charts.”
+Hypothesis: Danceability will be the best predictors of a song’s duration, in weeks, on the Billboard 100 charts.
 
 Does a song's number of appearances on the Billboard 100 charts make it more probable to reach a higher peak position?
-“There will be no correlation between a song’s number of appearances on the chart and it’s peak position.”
+
+Hypothesis: There will be no correlation between a song’s number of appearances on the chart and it’s peak position.
 
 Which song keys and modes are the most popular on Billboard 100 charts?
-“No key/mode combination will be significantly more popular than others on the Billboard 100 charts.”
 
-# Survivor 
+Hypothesis: No key/mode combination will be significantly more popular than others on the Billboard 100 charts.
+
+
 
 
 # Glimpse
@@ -65,6 +111,12 @@ Please use `glimpse` for your datasets here.
 ```{r}
 glimpse(movies)
 glimpse(raw_bechdel)
+
+glimpse(castaways)
+glimpse(challenges)
+glimpse(jury_votes)
+glimpse(summary)
+glimpse(viewers)
 
 glimpse(billboard)
 glimpse(audio_features)
