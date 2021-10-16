@@ -110,16 +110,22 @@ Hypothesis: No key/mode combination will be significantly more popular than othe
 # Glimpse
 
 Please use `glimpse` for your datasets here.
-```{r}
+```{r glimpse-bechdel}
 glimpse(movies)
 glimpse(raw_bechdel)
+```
 
+
+```{r glimpse-survivor}
 glimpse(castaways)
 glimpse(challenges)
 glimpse(jury_votes)
 glimpse(summary)
 glimpse(viewers)
+```
 
+
+```{r glimpse-billboard-100}
 glimpse(billboard)
 glimpse(audio_features)
 ```
