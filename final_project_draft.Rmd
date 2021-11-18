@@ -24,9 +24,6 @@ From this dataset, we're interested in examining songs from the 2000s and songs 
 *Someone insert the description of each variable that we'll use here, like how Professor Smith does at the top of every lab.*
 Danceability- means this, the values from this to that, and the values mean this (i.e. the higher the value, the more danceable it is)
 
-## Methodology
-
-
 
 ```{r load-packages}
 library(tidyverse) 
