@@ -1,5 +1,5 @@
 ---
-title: "peer-review"
+title: "Peer-Review"
 authors: Aimi, Sonya, Ethan, and Luca
 output:
   pdf_document: default
@@ -8,47 +8,56 @@ output:
 
 ## Peer Review of Group 3-2
 
-## Introduction and Data
+## Intro
 
-Is the research question and goal of the report clearly stated?
+The first sentence in the introduction is very eye-catching, and it sets up the reason for what this research question is trying to answer. 
 
 The research question and goal is very clearly stated. However, if possible, I would suggest that either in the introduction or in methodology to have a some text describing you're going to do. For example, "we decided to use linear regression to see if there would be particular factor that is the strongest predictor of morality." 
 
-Does the introduction provide appropriate background context and motivation for a general reader?
+## Data
 
-Is the source of the data stated with an appropriate citation?
+In your data section, it's very clear how the data was collected. I know that you have a general description of your relevant variables, but they're a bit vague. Perhaps it would be better to format how Professor Smith does in his HW and lab assignments? 
 
-Is it clear when and how the data was collected?
+For example, 
+moral- person agrees that right and wrong are not black and white. Either a 0 or 1. 0 represents no the person disagrees. 1 represents yes the person agrees. 
 
-Is data manipulation described clearly (missing data, creation of new variables, etc)?
-
-Are the cases and relevant variables described?
+For the belief in God variable, did the dataset clarify if it was belief in the Christian God? Or just belief in a singular God? Does it take into account religion with multiple gods?
 
 ## Methodology
 
-Do the visualizations correspond to the stated research question?
+The methodology section is a bit sparse. Why did you decide to rename variables? What does rename() do? An explanation of why you manipulated your variables is needed. 
 
-Are visualizations effective and do they follow the visualization principles we have discussed in STA 199 (including elements like titles, labels, appropriate for the type of data, etc)?
+Similarly, for summary stats, the interpretation of summary stats is well stated, but why did you choose to do summary stats? I think a short explanation (~1 sentence) would be great. For example, "We decided to do find the mean of the variable of beliefs so that we can gauge... " "We also calculated the proportion of people in each belief group to see... " 
 
-Is the choice of statistical method justified?
+For organization, I would group the mean() stuff in one code chunk, and the prop and its visualization is another code chunk. That way, your explanation and discussion can be the same. 
 
-## Results
+## Linear Regression
 
-Are the chosen techniques for answering the research question appropriate for the research context and type of data?
+For linear regression, the goal is well stated. The discussion does a good job with discussing which factor is the strongest predictor and the value of r-squared is throughly explained. 
 
-Is the research question answered effectively?
+The only thing I would add is a discussion on what the linear model came up with? Maybe write out the linear models in equation form? Interpret the slope and/or intercept? Since only 1 factor seems to be a strong predictor, maybe you can decide to just add the equation and interpretation for just that variable. 
 
-## Discussion
+This is more of a random thought, but it would interesting the examine the relationship between the variables belief in God and belief in life after death would be correlated. 
 
-Is the answer to the research question summarized and supported by statistical arguments?
+If you're looking for more things to add, examining the relationship between these 2 variables would be interesting. Modeling with interaction effects (from AE22, the last class on linear regression) would be cool. Since you performed linear regression methods and found that "Belief in God" is the strongest predictor, I wondered how close the "belief in life after death" was to be the strongest predictor. 
+
+## Hypothesis Testing
+
+The hypothesis testing section is very strong. Everything is well defined and explained. However, I would just tie it more strongly with your research question. Don't forget to set the seed!
+
+For you CI, I think an interpretation of the interval would be a good addition-- just to tie it more strongly with your goal/research question. "Because this interval..., we fail to reject the null hypothesis." 
+
+## Misc.
+
+I know that this is the rough draft, but don't forget to discuss the limitations of your analysis in your discussion! That's one of the points you have to cover according to the final project instructions. 
+
+Overall, this was very clear and your choices made sense. Writing is also very clear. 
+
+There were a few questions from the link that Professor Smith sent out that I wasn't really able to answer, but I just wanted to put it here in case it would be helpful to you when moving on to the final draft: 
+
+Is the answer to the research question summarized and supported by statistical arguments? -I think you need an overall conclusion statement. 
 
 Are limitations of the analysis clearly outlined?
-
-## General
-
-Is the writing clear (including elements like spelling, grammar, etc)? Are you able to follow what is being done?
-
-Is the coding clear? Are you able to follow precisely what is being done?
 
 Are you able to reproduce all aspects of the report, including output, visualizations, etc? Have the reproducibility principles we have discussed in STA 199 been followed?
 
@@ -56,10 +65,8 @@ Is the report well-formatted and readable (including layout but also only report
 
 Have they appropriate outlined the next steps with gaps clearly defined?
 
-Any suggestions for them moving forward?
 
-## Final Considerations
 
-What is one question you have for the group after reading their analysis?
 
-What is one thing the group has done especially well?
+
+
