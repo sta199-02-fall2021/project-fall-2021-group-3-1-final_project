@@ -1,0 +1,65 @@
+---
+title: "peer-review"
+authors: Aimi, Sonya, Ethan, and Luca
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Peer Review of Group 3-2
+
+## Introduction and Data
+
+Is the research question and goal of the report clearly stated?
+
+The research question and goal is very clearly stated. However, if possible, I would suggest that either in the introduction or in methodology to have a some text describing you're going to do. For example, "we decided to use linear regression to see if there would be particular factor that is the strongest predictor of morality." 
+
+Does the introduction provide appropriate background context and motivation for a general reader?
+
+Is the source of the data stated with an appropriate citation?
+
+Is it clear when and how the data was collected?
+
+Is data manipulation described clearly (missing data, creation of new variables, etc)?
+
+Are the cases and relevant variables described?
+
+## Methodology
+
+Do the visualizations correspond to the stated research question?
+
+Are visualizations effective and do they follow the visualization principles we have discussed in STA 199 (including elements like titles, labels, appropriate for the type of data, etc)?
+
+Is the choice of statistical method justified?
+
+## Results
+
+Are the chosen techniques for answering the research question appropriate for the research context and type of data?
+
+Is the research question answered effectively?
+
+## Discussion
+
+Is the answer to the research question summarized and supported by statistical arguments?
+
+Are limitations of the analysis clearly outlined?
+
+## General
+
+Is the writing clear (including elements like spelling, grammar, etc)? Are you able to follow what is being done?
+
+Is the coding clear? Are you able to follow precisely what is being done?
+
+Are you able to reproduce all aspects of the report, including output, visualizations, etc? Have the reproducibility principles we have discussed in STA 199 been followed?
+
+Is the report well-formatted and readable (including layout but also only reporting relevant output, with no extraneous code, visuals, etc)?
+
+Have they appropriate outlined the next steps with gaps clearly defined?
+
+Any suggestions for them moving forward?
+
+## Final Considerations
+
+What is one question you have for the group after reading their analysis?
+
+What is one thing the group has done especially well?
