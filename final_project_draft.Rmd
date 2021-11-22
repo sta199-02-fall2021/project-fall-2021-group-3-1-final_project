@@ -30,6 +30,7 @@ Tempo - The overall estimated tempo of a track in beats per minute (BPM). In mus
 
 ```{r load-packages}
 library(tidyverse) 
+library(tidymodels)
 ```
 ## Setting Up Our Project
 
@@ -67,7 +68,10 @@ combined <- audio_features %>%
 To examine how attributes in #1 Billboard songs have changed over time, we created visualizations to show the distribution of values for each numerical factor that we're interested in: danceability, energy, speechiness, valence, and tempo. As mentioned in our introduction, in Billboard #1 songs, we predict that speechiness and tempo have decreased then increased over the 2000s due to the rising popularity of rap. We also predict that there are no significant patterns for danceability, valence, and energy; we think that the values for these factors will remain relatively constant. To keep our visualization readable, we decided that instead of keeping the time format that the current dataset has (M/D/Y), we will group by year. 
 
 ```{r cleaning-time}
-#time in the dataset is in the form of dates, such as 7/17/2001. We need to figure out how to only get the year
+#time in the dataset is in the form of dates, such as 7/17/2001. Changed to Date object.
+billboard2 <- billboard %>% 
+  mutate(date = as.Date(week_id, format = "%m/%d/%Y", origin = "1958-08-02")) %>%
+  mutate(month = format(date, "%m"))
 ```
 
 
