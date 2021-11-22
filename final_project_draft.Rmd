@@ -71,7 +71,8 @@ To examine how attributes in #1 Billboard songs have changed over time, we creat
 #time in the dataset is in the form of dates, such as 7/17/2001. Changed to Date object.
 billboard2 <- billboard %>% 
   mutate(date = as.Date(week_id, format = "%m/%d/%Y", origin = "1958-08-02")) %>%
-  mutate(month = format(date, "%m"))
+  mutate(month = format(date, "%m")) %>%
+  mutate(year= format(date, "%Y"))
 ```
 
 
