@@ -55,6 +55,8 @@ billboard_top <- billboard %>%
 #this doesn't work because some songs are #1 for multiple weeks, so need to clean to have it appear once. Since we're only examining #1 songs, we can just get the songs that have been #1. Don't forget to filter so it's just songs in the 2000s. Need to verify that there are over 500 observations (that's the minimum required by the class)
 
 
+combined <- audio_features %>%
+  left_join(billboard, by= c("song"))
 ```
 
 
