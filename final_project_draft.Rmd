@@ -16,7 +16,7 @@ From this dataset, we're interested in examining songs from 2000 to today and so
 
 
 Variable description:
-Genre - 
+Genre - is based on what genre Spotify puts the song into. 
 
 Danceability - describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
 
@@ -31,6 +31,7 @@ Tempo - The overall estimated tempo of a track in beats per minute (BPM). In mus
 ```{r load-packages}
 library(tidyverse) 
 library(tidymodels)
+library(stringr)
 ```
 ## Setting Up Our Project
 
@@ -45,19 +46,17 @@ To conduct our work, we first need to combine our datasets, which is slightly co
 
 
 ```{r creating-dataset}
-#this is to create the dataset that we'll end up using
+billboard2 <- billboard %>% 
+  mutate(date = as.Date(week_id, format = "%m/%d/%Y", origin = "1958-08-02")) %>%
+  mutate(month = format(date, "%m")) %>%
+  mutate(year= format(date, "%Y"))
 
-billboard_top <- billboard %>%
-  filter(peak_position == 1) %>%
-  filter(week_position == 1) 
+all_combined <- audio_features %>%
+  right_join(billboard2, by= c("song", "performer"))
 
-#could possibly use the variable of instance? Instance tells you the number of times that a song has appeared on the chart. So, if we find the max instance, that would return one song and that would also show you how many weeks it has been on the chart, since instance = number of weeks. 
- 
-#this doesn't work because some songs are #1 for multiple weeks, so need to clean to have it appear once. Since we're only examining #1 songs, we can just get the songs that have been #1. Don't forget to filter so it's just songs in the 2000s. Need to verify that there are over 500 observations (that's the minimum required by the class)
-
-
-combined <- audio_features %>%
-  left_join(billboard, by= c("song"))
+combined <- all_combined %>%
+  filter(year > 1999) %>%
+  filter(spotify_genre != "[]") 
 ```
 
 
@@ -67,13 +66,6 @@ combined <- audio_features %>%
 
 To examine how attributes in #1 Billboard songs have changed over time, we created visualizations to show the distribution of values for each numerical factor that we're interested in: danceability, energy, speechiness, valence, and tempo. As mentioned in our introduction, in Billboard #1 songs, we predict that speechiness and tempo have decreased then increased over the 2000s due to the rising popularity of rap. We also predict that there are no significant patterns for danceability, valence, and energy; we think that the values for these factors will remain relatively constant. To keep our visualization readable, we decided that instead of keeping the time format that the current dataset has (M/D/Y), we will group by year. 
 
-```{r cleaning-time}
-#time in the dataset is in the form of dates, such as 7/17/2001. Changed to Date object.
-billboard2 <- billboard %>% 
-  mutate(date = as.Date(week_id, format = "%m/%d/%Y", origin = "1958-08-02")) %>%
-  mutate(month = format(date, "%m")) %>%
-  mutate(year= format(date, "%Y"))
-```
 
 
 ```{r visualizing-factors}
@@ -102,16 +94,24 @@ Besides looking by year, there are other time components that would influence wh
 *If this happens*: Since it seems like *insert factor or factors* don't really follow a pattern, we decided to remove *insert factor or factors* in the below analyses. 
 
 ## Testing Pop Genre
-*Will need to ask a TA about this because there are many different genres that include the word 'pop'*
-To examine the correlation between genre and Billboard rankings, we created a null and alternative hypothees to test with simulation-based methods. Since the labels "pop genre" and "popular genre"tend to be interchangeable, we predict that the majority of songs that are #1 on the Billboard are of the pop genre. 
+To examine the correlation between genre and Billboard rankings, we created a null and alternative hypothees to test with simulation-based methods. Since the labels "pop genre" and "popular genre" tend to be interchangeable, we predict that the majority of songs that are #1 on the Billboard are of the pop genre. 
 
 Null Hypothesis: 50% of the #1 Billboard songs are of the pop genre. 
 Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre. 
 
 $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
-```{r null distribution}
+```{r dataset-for-top-song}
+combined_1 <- combined %>%
+  filter(week_position == 1)
 
+typeof(combined_1$spotify_genre)
 ```
+
+```{r is-it-pop}
+combined_1 <- combined_1 %>%
+  mutate(ifelse(str_detect(spotify_genre, "pop")== TRUE, 1, 0))
+```
+
 
 ```{ visualizing-null-p-value}
 
