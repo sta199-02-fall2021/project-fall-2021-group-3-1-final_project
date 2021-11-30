@@ -62,14 +62,15 @@ combined <- all_combined %>%
 
 ## Attributes and Time
 
-##By Year
+##By Rank
 
-To examine how attributes in #1 Billboard songs have changed over time, we created visualizations to show the distribution of values for each numerical factor that we're interested in: danceability, energy, speechiness, valence, and tempo. As mentioned in our introduction, in Billboard #1 songs, we predict that speechiness and tempo have decreased then increased over the 2000s due to the rising popularity of rap. We also predict that there are no significant patterns for danceability, valence, and energy; we think that the values for these factors will remain relatively constant. To keep our visualization readable, we decided that instead of keeping the time format that the current dataset has (M/D/Y), we will group by year. 
 
+We looked at the differences between attributes of song ranks. 
 
 
 ```{r visualizing-factors}
-#probably create one graph with each factor in a different color
+#Ethan
+
 ```
 
 
@@ -78,7 +79,7 @@ To examine how attributes in #1 Billboard songs have changed over time, we creat
 
 ## By Season
 
-Besides looking by year, there are other time components that would influence what attributes are preferred over others. Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that could mean that happier songs with medium tempos are preferred. To further examine attributes and #1 songs, we separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
+Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that could mean that happier songs with medium tempos are preferred. To further examine attributes and #1 songs, we separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
 ```{r group-dataset-by-season}
 
@@ -89,7 +90,7 @@ Besides looking by year, there are other time components that would influence wh
 ```
 
 
-## Genre and Longtivity Billboard #1 Songs
+## Genre and Billboard #1 Songs
 
 *If this happens*: Since it seems like *insert factor or factors* don't really follow a pattern, we decided to remove *insert factor or factors* in the below analyses. 
 
@@ -119,7 +120,7 @@ combined_1 <- combined_1 %>%
 *Insert Discussion*
 
 
-To verify our conclusion from above, we also decided to perform a 98% Confidence Interval Test. 
+To verify our conclusion from above, we also decided to perform a 98% Confidence Interval Test. *explain why 98% interval*
 
 ```{r create-bootstrap}
 
@@ -132,11 +133,8 @@ To verify our conclusion from above, we also decided to perform a 98% Confidence
 
 ## Testing Predictors
 
-*NEED TO DISCUSS AS A GROUP BECAUSE IF OUR WHOLE DATASET IS SONGS THAT ARE #1,  CAN WE DO A LINEAR REGRESSION TEST? Wouldn't linear regression not work if we're trying to find which attributes predict a song being #1 if the whole dataset is songs that are #1? I'm going to change it so the response variable is instance, thus we're examining the longetivity of songs being on the chart.*
+linear models
 
-To further examine the relationship between attributes and songs on the Billboard, we decided to use linear regression. We want to see what attribute is the strongest predictor of a song remaining on the Billboard 100 after peaking at #1. We predict that energy is the strongest predictor for longevity. But we will also test, dancebility, tempo, valence and speechiness.
-
-To test this, we created a linear regression model with the explanatory variable as an attribute and the response variable as the instance variable. Instance in our dataset is defined as the number of times a song has appeared on the chart. We then found the R-squared value to see which attribute is the strongest predictor. 
 
 ```{r linear-model}
 
@@ -146,19 +144,6 @@ To test this, we created a linear regression model with the explanatory variable
 
 ```
 *Insert Discussion*
-
-
-## Probability of Songs Becoming #1
-
-Now, that we've found which attribute/attributes is/are the strongest predictors, we want to delve deeper into these attributes' relationship with song's longevity. We first found the average value of these attributes. Given that the song is #1 and the attribute is at its average value, what is the probability that the song will remain on the billboard for over a month? 
-
-```{r find-average-value}
-
-```
-
-```{r probability}
-
-```
 
 
 
