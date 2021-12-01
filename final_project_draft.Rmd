@@ -8,6 +8,9 @@ authors: "Aimi,  Sonya, Ethan, Luca"
 
 ## Introduction
 
+
+**ASK ABOUT PUTTING CODEBOOK IN THE README FILE AND NOT IN THE PROJECT ITSELF email**
+
 “The Billboard Hot 100 is the music industry standard record chart in the United States for songs, published weekly by Billboard magazine. Chart rankings are based on sales (physical and digital), radio play, and online streaming in the United States.”
 
 The data was found on TidyTuesday and is from Data.World with the original data points found on Billboard.com and Spotify. The cases are songs from the certain week(s) in which they appeared on the Billboard 100 chart. It includes every weekly Hot 100 singles chart from Billboard.com. Relevant variables from Billboard include song, performer, instance (ordinal for which appearance on the chart it is for the song), previous_week_position, and more. Relevant variables from Spotify include spotify_genre, spotify_track_duration, danceability (double 0-1; factoring in tempo, rhythm stability, beat strength), energy (double 0-1; perceptual measure of intensity and activity), key, acousticness (double 0-1), and valence (double 0-1; “musical positiveness”), and more. Both include a song name in the variable "song" that we'll use for joining. 
@@ -55,8 +58,7 @@ all_combined <- audio_features %>%
   right_join(billboard2, by= c("song", "performer"))
 
 combined <- all_combined %>%
-  filter(year > 1999) %>%
-  filter(spotify_genre != "[]") 
+  filter(year > 1999) 
 ```
 
 
@@ -101,6 +103,9 @@ Null Hypothesis: 50% of the #1 Billboard songs are of the pop genre.
 Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre. 
 
 $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
+
+To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the spotify genre column. Though the column entries are formatted like a list, it is actually a string, as evidenced by the result of the typeof(). So, we used str_detect to detect the word "pop". If "pop" does appear, the is_pop variable will have a "Yes". If not, the is_pop variable will have a "No". With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible.
+
 ```{r dataset-for-top-song}
 combined_1 <- combined %>%
   filter(week_position == 1)
@@ -110,26 +115,59 @@ typeof(combined_1$spotify_genre)
 
 ```{r is-it-pop}
 combined_1 <- combined_1 %>%
-  mutate(ifelse(str_detect(spotify_genre, "pop")== TRUE, 1, 0))
+  filter(spotify_genre != "[]") %>%
+  mutate(is_pop= ifelse(str_detect(spotify_genre, "pop")== TRUE, "Yes", "No"))
 ```
 
 
-```{ visualizing-null-p-value}
+```{r null-distribution}
+set.seed(1)
+null_dist <- combined_1 %>%
+  specify(response= is_pop, success = "Yes") %>%
+  hypothesize(null= "point", p= 0.5) %>%
+  generate(reps= 10000, type= "draw") %>%
+  calculate(stat= "prop")
 
+p_hat <- combined_1 %>%
+  count(is_pop) %>%
+  mutate(prob= n/ sum(n)) %>%
+  filter(is_pop== "Yes") %>%
+  pull()
 ```
-*Insert Discussion*
+
+```{r visualizing-null-p-value}
+visualize(null_dist) + 
+  shade_p_value(obs_stat= p_hat, direction= "greater")
+
+p_value <- null_dist %>%
+  get_p_value(obs_stat= p_hat, direction= "greater") %>%
+  pull()
+
+p_value
+```
+Using the typical significance level of 0.05, we reject the null hypothesis. Given that the p-value is 0, there is strong evidence that the majority of #1 Billboard songs are of the pop genre. 
 
 
-To verify our conclusion from above, we also decided to perform a 98% Confidence Interval Test. *explain why 98% interval*
+**ask Professor Smith This: why 98 confidence interval over other intervals?**
+To verify our conclusion from above, we also decided to perform a confidence interval Test. Since our p-value is 0, we decided to do a 99% confidence interval test since that would give us less precision but a greater likelihood of containing our true proportion. 
 
 ```{r create-bootstrap}
+set.seed(2)
+boot_dist <- combined_1 %>%
+  specify(response= is_pop, success= "Yes") %>%
+  generate(reps= 10000, type= "bootstrap") %>%
+  calculate(stat= "prop") 
 
 ```
 
 ```{r CI-test}
+CI <- boot_dist %>%
+  summarize(lower= quantile(stat, 0.01), 
+            upper= quantile(stat, 0.99))
 
+CI
 ```
-*Insert Discussion*
+We are 98% confident that the proportion of #1 Billboard songs that are of the pop genre is between 0.884 and 0.925. Since this interval does not have 0.5 between it, we reject our null hypothesis, further providing evidence that the majority of #1 Billboard songs are of the pop genre. 
 
 ## Testing Predictors
 
