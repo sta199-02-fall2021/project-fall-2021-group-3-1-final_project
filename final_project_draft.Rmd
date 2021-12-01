@@ -3,7 +3,7 @@ title: "Final Project Draft"
 output:
   pdf_document: default
   html_document: default
-authors: "Aimi,  Sonya, Ethan, Luca"
+authors: "Aimi, Sonya, Ethan, Luca"
 ---
 
 ## Introduction
@@ -19,7 +19,7 @@ From this dataset, we're interested in examining songs from 2000 to today and so
 
 
 Variable description:
-Genre - is based on what genre Spotify puts the song into. 
+Genre - is based on what genre Spotify puts the song into. Genre are categories that a song can put into based on musical techniques used, the cultural context behind the song and the spirit of the themes.
 
 Danceability - describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
 
