@@ -170,16 +170,77 @@ CI
 We are 98% confident that the proportion of #1 Billboard songs that are of the pop genre is between 0.884 and 0.925. Since this interval does not have 0.5 between it, we reject our null hypothesis, further providing evidence that the majority of #1 Billboard songs are of the pop genre. 
 
 ## Testing Predictors
-
 linear models
+To further examine the relationship between attributes and songs on the Billboard, we decided to use logistic regression. We thought that it would be interesting to observe which attribute is the strongest predictor of a song becoming a #1 Billboard. To do this we decided to test with logistic regression how the attributes; danceability, energy, speechiness, valence, and tempo predicted how well a song would do in becoming #1 on the Billboard charts.
 
+First, we will show how the attribute danceability impacts the weekly position of a song. 
 
-```{r linear-model}
+```{r danceability linear-model}
+combined %>%
+  ggplot(aes(x = danceability, y = week_position)) + 
+  geom_hex() 
 
+danceability_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(danceability ~ week_position, data = combined)
+tidy(danceability_model)
 ```
 
-```{r r-squared-values}
+```{r Energy Linear Model}
+combined %>%
+  ggplot(aes(x = energy, y = week_position)) + 
+  geom_hex() 
 
+energy_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(energy ~ week_position, data = combined)
+tidy(energy_model)
+```
+
+
+```{r Speechiness Linear Model}
+combined %>%
+  ggplot(aes(x = speechiness, y = week_position)) + 
+  geom_hex() 
+
+speechiness_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(speechiness ~ week_position, data = combined)
+tidy(speechiness_model)
+```
+
+
+```{r Valence Linear Model}
+combined %>%
+  ggplot(aes(x = valence, y = week_position)) + 
+  geom_hex() 
+
+valence_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(valence ~ week_position, data = combined)
+tidy(valence_model)
+```
+
+```{r Tempo Linear Model}
+combined %>%
+  ggplot(aes(x = tempo, y = week_position)) + 
+  geom_hex() 
+
+tempo_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(tempo ~ week_position, data = combined)
+tidy(tempo_model)
+```
+
+Calculation of $R^2$ Values of the different predictors.
+danceability, energy, speechiness, valence, and tempo
+
+```{r r-squared-values}
+glance(danceability_model)$adj.r.squared
+glance(energy_model)$adj.r.squared
+glance(speechiness_model)$adj.r.squared
+glance(valence_model)$adj.r.squared
+glance(tempo_model)$adj.r.squared
 ```
 *Insert Discussion*
 
