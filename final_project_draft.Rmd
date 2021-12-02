@@ -74,23 +74,40 @@ We looked at the differences between attributes of song ranks.
 #Ethan
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
-  geom_hex()
+  geom_hex() + 
+  labs(title = "How Does Danceability affect the Weekly Position of a Song?",
+       x = "Danceability", y = "Weekly Position")
 
 combined %>%
   ggplot(mapping = aes(x = instrumentalness, y = week_position)) +
-  geom_hex()
+  geom_hex() + 
+  labs(title = "How Does Instrumentalness affect the Weekly Position of a Song?",
+       x = "Instrumentalness", y = "Weekly Position")
 
 combined %>%
   ggplot(mapping = aes(x = valence, y = week_position)) +
-  geom_hex()
+  geom_hex() + 
+  labs(title = "How Does Valence affect the Weekly Position of a Song?",
+       x = "Valence", y = "Weekly Position")
+
+combined %>%
+  ggplot(aes(x = tempo, y = week_position)) + 
+  geom_hex() + 
+  labs(title = "How Does Tempo affect the Weekly Position of a Song?",
+       x = "Tempo", y = "Weekly Position")
 
 combined %>%
   ggplot(mapping = aes(x = speechiness, y = week_position)) +
-  geom_hex()
+  geom_hex() + 
+  labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
+       x = "Speechiness", y = "Weekly Position")
 
 combined %>%
   ggplot(mapping = aes(x = previous_week_position, y = week_position)) +
-  geom_hex()
+  geom_hex() + 
+  labs(
+    title = "How Does the Previous Week Position affect the Weekly Position of a Song?",
+       x = "Previous Week Position", y = "Weekly Position")
 ```
 
 
@@ -226,12 +243,6 @@ To further examine the relationship between attributes and the weekly position o
 First, we will show how the attribute danceability impacts the weekly position of a song. 
 
 ```{r danceability linear-model}
-combined %>%
-  ggplot(aes(x = danceability, y = week_position)) + 
-  geom_hex() + 
-  labs(title = "How Does Danceability affect the Weekly Position of a Song?",
-       x = "Danceability", y = "Weekly Position")
-
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(danceability ~ week_position, data = combined)
@@ -239,40 +250,20 @@ tidy(danceability_model)
 ```
 
 ```{r Energy Linear Model}
-combined %>%
-  ggplot(aes(x = energy, y = week_position)) + 
-  geom_hex() + 
-  labs(title = "How Does Energy affect the Weekly Position of a Song?",
-       x = "Energy", y = "Weekly Position")
-
 energy_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(energy ~ week_position, data = combined)
 tidy(energy_model)
 ```
 
-
 ```{r Speechiness Linear Model}
-combined %>%
-  ggplot(aes(x = speechiness, y = week_position)) + 
-  geom_hex() + 
-  labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
-       x = "Speechiness", y = "Weekly Position")
-
 speechiness_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(speechiness ~ week_position, data = combined)
 tidy(speechiness_model)
 ```
 
-
 ```{r Valence Linear Model}
-combined %>%
-  ggplot(aes(x = valence, y = week_position)) + 
-  geom_hex() + 
-  labs(title = "How Does Valence affect the Weekly Position of a Song?",
-       x = "Valence", y = "Weekly Position")
-
 valence_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(valence ~ week_position, data = combined)
@@ -280,12 +271,6 @@ tidy(valence_model)
 ```
 
 ```{r Tempo Linear Model}
-combined %>%
-  ggplot(aes(x = tempo, y = week_position)) + 
-  geom_hex() + 
-  labs(title = "How Does Tempo affect the Weekly Position of a Song?",
-       x = "Tempo", y = "Weekly Position")
-
 tempo_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(tempo ~ week_position, data = combined)
