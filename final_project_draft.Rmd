@@ -31,14 +31,14 @@ Valence - A measure from 0.0 to 1.0 describing the musical positiveness conveyed
 
 Tempo - The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.
 
-```{r load-packages}
+```{r load-packages, message= F}
 library(tidyverse) 
 library(tidymodels)
 library(stringr)
 ```
 ## Setting Up Our Project
 
-```{r load-in-data}
+```{r load-in-data, message=FALSE, warning=FALSE}
 billboard <- 
   readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
 audio_features <-
@@ -70,7 +70,7 @@ combined <- all_combined %>%
 We looked at the differences between attributes of song ranks. 
 
 
-```{r visualizing-factors}
+```{r visualizing-factors, fig.height= 2, fig.width= 3}
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
   geom_hex() + 
@@ -100,13 +100,6 @@ combined %>%
   geom_hex() + 
   labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
        x = "Speechiness", y = "Weekly Position")
-
-combined %>%
-  ggplot(mapping = aes(x = previous_week_position, y = week_position)) +
-  geom_hex() + 
-  labs(
-    title = "How Does the Previous Week Position affect the Weekly Position of a Song?",
-       x = "Previous Week Position", y = "Weekly Position")
 ```
 
 
@@ -134,7 +127,7 @@ season_data <- combined %>%
 
 ```
 
-```{r season-visualization}
+```{r season-visualization, fig.height= 2, fig.width= 3}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = tempo)) +
   geom_boxplot() + coord_flip() +
@@ -143,7 +136,7 @@ ggplot(data = season_data,
 
 ```
 
-```{r season-energy-viz}
+```{r season-energy-viz, fig.height= 2, fig.width= 3}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = energy)) +
   geom_boxplot() + coord_flip() +
@@ -151,7 +144,7 @@ ggplot(data = season_data,
        x = "Season", y = "Energy")
 ```
 
-```{r season-valence-viz}
+```{r season-valence-viz, fig.height= 2, fig.width= 3}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = valence)) +
   geom_boxplot() + coord_flip() +
@@ -159,7 +152,7 @@ ggplot(data = season_data,
        x = "Season", y = "Valence")
 ```
 
-```{r season-energy-dance}
+```{r season-energy-dance, fig.height= 2, fig.width= 3}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = danceability)) +
   geom_boxplot() + coord_flip() +
@@ -167,7 +160,7 @@ ggplot(data = season_data,
        x = "Season", y = "Danceability")
 ```
 
-```{r season-energy-speechiness}
+```{r season-energy-speechiness, fig.height= 2, fig.width= 3}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = speechiness)) +
   geom_boxplot() + coord_flip() +
@@ -217,7 +210,7 @@ p_hat <- combined_1 %>%
   pull()
 ```
 
-```{r visualizing-null-p-value}
+```{r visualizing-null-p-value, fig.height= 2, fig.width= 3}
 visualize(null_dist) + 
   shade_p_value(obs_stat= p_hat, direction= "greater")
 
@@ -260,38 +253,44 @@ First, we will show how the attribute danceability impacts the weekly position o
 ```{r danceability linear-model}
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(danceability ~ week_position, data = combined)
+  fit(week_position ~ danceability, data = combined)
 tidy(danceability_model)
 ```
 
 ```{r Energy Linear Model}
 energy_model <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(energy ~ week_position, data = combined)
+  fit(week_position ~ energy, data = combined)
 tidy(energy_model)
 ```
 
 ```{r Speechiness Linear Model}
 speechiness_model <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(speechiness ~ week_position, data = combined)
+  fit(week_position ~ speechiness, data = combined)
 tidy(speechiness_model)
 ```
 
 ```{r Valence Linear Model}
 valence_model <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(valence ~ week_position, data = combined)
+  fit(week_position ~ valence, data = combined)
 tidy(valence_model)
 ```
 
 ```{r Tempo Linear Model}
 tempo_model <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(tempo ~ week_position, data = combined)
+  fit(week_position ~ tempo, data = combined)
 tidy(tempo_model)
 ```
 
+```{r Overall Linear Model}
+overall_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
+tidy(overall_model)
+```
 
 Calculation of $R^2$ Values of the different predictors.
 
@@ -301,19 +300,8 @@ glance(energy_model)$r.squared
 glance(speechiness_model)$r.squared
 glance(valence_model)$r.squared
 glance(tempo_model)$r.squared
-glance(season_model)$r.squared
+glance(overall_model)$r.squared
 ```
 *Insert Discussion*
 Talk about other factors that make a song popular that are influential such as social media or there is not variable called catchiness which could show how catchy a song is.
 
-
-## Things We Want Feedback on from Peer Review
-Is our research question clear?
-
-What do you think of the tests and visualizations that we're planning on performing? 
-
-How do you feel about our organization? Do you have suggestions on how we should be organizing our things?
-
-Are there other tests/hypotheseses we should look at?
-
-Note: this is just a basic template of our project. Some of the things that we are examining or variables could change just keep this in mind. Let us know what we can do to improve our project!
