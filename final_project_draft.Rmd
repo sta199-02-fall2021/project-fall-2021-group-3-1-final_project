@@ -72,7 +72,25 @@ We looked at the differences between attributes of song ranks.
 
 ```{r visualizing-factors}
 #Ethan
+combined %>%
+  ggplot(mapping = aes(x = danceability, y = week_position)) +
+  geom_hex()
 
+combined %>%
+  ggplot(mapping = aes(x = instrumentalness, y = week_position)) +
+  geom_hex()
+
+combined %>%
+  ggplot(mapping = aes(x = valence, y = week_position)) +
+  geom_hex()
+
+combined %>%
+  ggplot(mapping = aes(x = speechiness, y = week_position)) +
+  geom_hex()
+
+combined %>%
+  ggplot(mapping = aes(x = previous_week_position, y = week_position)) +
+  geom_hex()
 ```
 
 
