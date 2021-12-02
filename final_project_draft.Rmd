@@ -84,20 +84,45 @@ We looked at the differences between attributes of song ranks.
 Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that could mean that happier songs with medium tempos are preferred. To further examine attributes and #1 songs, we separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
 ```{r group-dataset-by-season}
+combined$month <- as.numeric(combined$month)
 season_data <- combined %>%
-  mutate(season = case_when(month == 09 & 10 & 11 ~ "fall",
-                            month == 12 & 01 & 02 ~ "winter",
-                            month == 03 & 04 & 05 ~ "spring",
-                            month == 06 & 07 & 08 ~ "summer")) %>%
-  group_by(season)
+  mutate(season = case_when(month == (9) ~ "fall",
+                            month == (10) ~ "fall",
+                            month == (11) ~ "fall",
+                            month == (12) ~ "winter",
+                            month == (1) ~ "winter",
+                            month == (2) ~ "winter",
+                            month == (3) ~ "spring",
+                            month == (4) ~ "spring",
+                            month == (5) ~ "spring",
+                            TRUE ~ "summer")) 
+
 ```
 
 ```{r season-visualization}
-season_data %>%
-  ggplot(aes(x = season, y = tempo)) +
-           geom_point()
+ggplot(data = season_data, 
+       mapping = aes(x = season, y = tempo)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "How does tempo relate to #1 songs seasonally?", 
+       x = "Season", y = "Tempo")
+
 ```
 
+```{r season-energy-viz}
+ggplot(data = season_data, 
+       mapping = aes(x = season, y = energy)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "How does energy relate to #1 songs seasonally?", 
+       x = "Season", y = "Energy")
+```
+
+```{r season-valence-viz}
+ggplot(data = season_data, 
+       mapping = aes(x = season, y = valence)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "How does valence relate to #1 songs seasonally?", 
+       x = "Season", y = "Valence")
+```
 
 ## Genre and Billboard #1 Songs
 
