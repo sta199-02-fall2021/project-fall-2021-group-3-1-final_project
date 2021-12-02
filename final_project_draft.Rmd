@@ -84,11 +84,18 @@ We looked at the differences between attributes of song ranks.
 Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that could mean that happier songs with medium tempos are preferred. To further examine attributes and #1 songs, we separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
 ```{r group-dataset-by-season}
-
+season_data <- combined %>%
+  mutate(season = case_when(month == 09 & 10 & 11 ~ "fall",
+                            month == 12 & 01 & 02 ~ "winter",
+                            month == 03 & 04 & 05 ~ "spring",
+                            month == 06 & 07 & 08 ~ "summer")) %>%
+  group_by(season)
 ```
 
 ```{r season-visualization}
-
+season_data %>%
+  ggplot(aes(x = season, y = tempo)) +
+           geom_point()
 ```
 
 
