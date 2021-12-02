@@ -71,7 +71,6 @@ We looked at the differences between attributes of song ranks.
 
 
 ```{r visualizing-factors}
-#Ethan
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
   geom_hex() + 
@@ -121,6 +120,7 @@ Seasons can influence what song attributes are preferred. For example, winter ha
 ```{r group-dataset-by-season}
 combined$month <- as.numeric(combined$month)
 season_data <- combined %>%
+  filter(week_position == 1) %>%
   mutate(season = case_when(month == (9) ~ "fall",
                             month == (10) ~ "fall",
                             month == (11) ~ "fall",
@@ -159,6 +159,21 @@ ggplot(data = season_data,
        x = "Season", y = "Valence")
 ```
 
+```{r season-energy-dance}
+ggplot(data = season_data, 
+       mapping = aes(x = season, y = danceability)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "How does danceability relate to #1 songs seasonally?", 
+       x = "Season", y = "Danceability")
+```
+
+```{r season-energy-speechiness}
+ggplot(data = season_data, 
+       mapping = aes(x = season, y = speechiness)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "How does speechiness relate to #1 songs seasonally?", 
+       x = "Season", y = "Speechiness")
+```
 ## Genre and Billboard #1 Songs
 
 *If this happens*: Since it seems like *insert factor or factors* don't really follow a pattern, we decided to remove *insert factor or factors* in the below analyses. 
@@ -277,6 +292,7 @@ tempo_model <- linear_reg() %>%
 tidy(tempo_model)
 ```
 
+
 Calculation of $R^2$ Values of the different predictors.
 
 ```{r r-squared-values}
@@ -285,6 +301,7 @@ glance(energy_model)$r.squared
 glance(speechiness_model)$r.squared
 glance(valence_model)$r.squared
 glance(tempo_model)$r.squared
+glance(season_model)$r.squared
 ```
 *Insert Discussion*
 Talk about other factors that make a song popular that are influential such as social media or there is not variable called catchiness which could show how catchy a song is.
