@@ -203,7 +203,7 @@ We are 98% confident that the proportion of #1 Billboard songs that are of the p
 
 ## Testing Predictors
 linear models
-To further examine the relationship between attributes and songs on the Billboard, we decided to use logistic regression. We thought that it would be interesting to observe which attribute is the strongest predictor of a song becoming a #1 Billboard. To do this we decided to test with logistic regression how the attributes; danceability, energy, speechiness, valence, and tempo predicted how well a song would do in becoming #1 on the Billboard charts.
+To further examine the relationship between attributes and the weekly position of songs on the Billboard top 100, we decided to use linear regression. We thought that it would be interesting to observe which attribute is the strongest predictor of a song doing well on the Billboard. To do this we decided to test with logistic regression how the attributes; danceability, energy, speechiness, valence, and tempo predicted how well a song would do in becoming #1 on the Billboard charts.
 
 First, we will show how the attribute danceability impacts the weekly position of a song. 
 
@@ -265,7 +265,6 @@ tidy(tempo_model)
 ```
 
 Calculation of $R^2$ Values of the different predictors.
-danceability, energy, speechiness, valence, and tempo
 
 ```{r r-squared-values}
 glance(danceability_model)$adj.r.squared
@@ -275,7 +274,7 @@ glance(valence_model)$adj.r.squared
 glance(tempo_model)$adj.r.squared
 ```
 *Insert Discussion*
-
+Talk about other factors that make a song popular that are influential such as social media or there is not variable called catchiness which could show how catchy a song is.
 
 
 ## Things We Want Feedback on from Peer Review
