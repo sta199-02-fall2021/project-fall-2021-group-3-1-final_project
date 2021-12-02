@@ -210,7 +210,9 @@ First, we will show how the attribute danceability impacts the weekly position o
 ```{r danceability linear-model}
 combined %>%
   ggplot(aes(x = danceability, y = week_position)) + 
-  geom_hex() 
+  geom_hex() + 
+  labs(title = "How Does Danceability affect the Weekly Position of a Song?",
+       x = "Danceability", y = "Weekly Position")
 
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
@@ -221,7 +223,9 @@ tidy(danceability_model)
 ```{r Energy Linear Model}
 combined %>%
   ggplot(aes(x = energy, y = week_position)) + 
-  geom_hex() 
+  geom_hex() + 
+  labs(title = "How Does Energy affect the Weekly Position of a Song?",
+       x = "Energy", y = "Weekly Position")
 
 energy_model <- linear_reg() %>%
   set_engine("lm") %>%
@@ -233,7 +237,9 @@ tidy(energy_model)
 ```{r Speechiness Linear Model}
 combined %>%
   ggplot(aes(x = speechiness, y = week_position)) + 
-  geom_hex() 
+  geom_hex() + 
+  labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
+       x = "Speechiness", y = "Weekly Position")
 
 speechiness_model <- linear_reg() %>%
   set_engine("lm") %>%
@@ -245,7 +251,9 @@ tidy(speechiness_model)
 ```{r Valence Linear Model}
 combined %>%
   ggplot(aes(x = valence, y = week_position)) + 
-  geom_hex() 
+  geom_hex() + 
+  labs(title = "How Does Valence affect the Weekly Position of a Song?",
+       x = "Valence", y = "Weekly Position")
 
 valence_model <- linear_reg() %>%
   set_engine("lm") %>%
@@ -256,7 +264,9 @@ tidy(valence_model)
 ```{r Tempo Linear Model}
 combined %>%
   ggplot(aes(x = tempo, y = week_position)) + 
-  geom_hex() 
+  geom_hex() + 
+  labs(title = "How Does Tempo affect the Weekly Position of a Song?",
+       x = "Tempo", y = "Weekly Position")
 
 tempo_model <- linear_reg() %>%
   set_engine("lm") %>%
@@ -267,11 +277,11 @@ tidy(tempo_model)
 Calculation of $R^2$ Values of the different predictors.
 
 ```{r r-squared-values}
-glance(danceability_model)$adj.r.squared
-glance(energy_model)$adj.r.squared
-glance(speechiness_model)$adj.r.squared
-glance(valence_model)$adj.r.squared
-glance(tempo_model)$adj.r.squared
+glance(danceability_model)$r.squared
+glance(energy_model)$r.squared
+glance(speechiness_model)$r.squared
+glance(valence_model)$r.squared
+glance(tempo_model)$r.squared
 ```
 *Insert Discussion*
 Talk about other factors that make a song popular that are influential such as social media or there is not variable called catchiness which could show how catchy a song is.
