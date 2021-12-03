@@ -50,43 +50,59 @@ To start answering our research question, we first took a general look at how at
 
 ## Correlation Between Song Rankings and Song Attributes
 
-To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
+<<<<<<< HEAD
+To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and valence will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
+=======
+To accomplish this, we created visualizations to see the correlation between songs' weekly positions and song attributes. We hypothesize that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
+>>>>>>> 16c1a67c8ea12db4cd1be8fdfddbc8fe07323058
 
 
-```{r visualizing-factors, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r visualizing-factors, fig.height= 2, fig.width= 3, echo= FALSE, warning=FALSE}
+par(mfrow = c(3,2))
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Danceability affect the Weekly Position of a Song?",
-       x = "Danceability", y = "Weekly Position")
-
-combined %>%
-  ggplot(mapping = aes(x = instrumentalness, y = week_position)) +
-  geom_hex() + 
-  labs(title = "How Does Instrumentalness affect the Weekly Position of a Song?",
-       x = "Instrumentalness", y = "Weekly Position")
+  labs(title = "How Does Danceability affect the 
+       Weekly Position of a Song?",
+       Subtile = "1.A",
+       x = "Danceability", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8),  
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(mapping = aes(x = valence, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Valence affect the Weekly Position of a Song?",
-       x = "Valence", y = "Weekly Position")
+  labs(title = "How Does Valence affect the 
+       Weekly Position of a Song?",
+       subtitle = "1.C",
+       x = "Valence", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(aes(x = tempo, y = week_position)) + 
   geom_hex() + 
-  labs(title = "How Does Tempo affect the Weekly Position of a Song?",
-       x = "Tempo", y = "Weekly Position")
+  labs(title = "How Does Tempo affect the 
+       Weekly Position of a Song?", 
+       subtitle = "1.D",
+       x = "Tempo", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(mapping = aes(x = speechiness, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
-       x = "Speechiness", y = "Weekly Position")
+  labs(title = "How Does Speechiness affect the 
+       Weekly Position of a Song?", 
+       subtitle = "1.E",
+       x = "Speechiness", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 ```
 
+When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
 
-*Insert discussion about the graph*
+At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, our computational analytical techniques may be more useful.
 
 ## Testing Predictors
 
@@ -147,8 +163,11 @@ tidy(overall_model)
 glance(overall_model)$r.squared
 ```
 
+<<<<<<< HEAD
+=======
 
 In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
+>>>>>>> 98282979942a9c67f7f0573d21431c5cf1e9922d
 
 ## Looking into #1 Billboard Songs
 
@@ -156,7 +175,7 @@ Arguably, many artists' want to have a #1 Billboard song. So, to further investi
 
 ## Seasons
 
-Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that we hypothesize that that happier songs with medium tempos will be #1 Billboard songs. We separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
+Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that we hypothesize that that happier songs with medium tempos will be #1 Billboard songs. We separated the dataset by seasons and looked at the distribution of attributes' values by creating boxplots. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
 In figure 2.A, the tempo of Billboard #1 songs are highest in the winter and lowest in the spring, although the differences between tempo across seasons is quite small. In figure 2.B, the energy of Billboard #1 songs have a clear relationship between the seasons as summer as significantly the highest energy songs compared to winter. This makes sense because colder weather pairs better with slower songs and summery, warm weather pairs well with high-energy bops. Spring and fall have similar energy songs most likely due to the smaller difference in temperatures between the two seasons, compared to the wider temperature difference with winter and summer. In figure 2.C, winter and fall tend to have songs with lower valence compared to spring and summer. This makes sense with trends like sad-girl autumn and the winter blues. Because seasons can affect the moods of artists and consumers, people with lower moods in the cooler seasons of fall and winter, might consume more of the lower valence music in winter and fall. In figure 2.D, summer unsurprisingly has the most danceable #1 songs since summer also has the highest energy songs. Winter with lower valence, and lower energy songs, also have lowest energy songs. Spring has slightly more danceable songs than fall, but not by much. 
 In figure 2.E, the box-plot illstrates that the most #1 songs regardless of the season tend to have low speechiness, or minimal spoken word. For some reason, #1 songs charting in the summer and spring have slighly more speechiness than winter and fall. Overall, each of the boxplots can reveal unique relationships between #1 songs and various attributes seasonally. 
@@ -234,7 +253,7 @@ Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre.
 
 $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
 
-To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible.
+To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible. After constructing our null distribution, we created a visualization of it and also calculated the p-value. Since our alternative hypothesis is greater than 0.5, we did not do a two-sided p-value; we only looked at it from the greater direction. 
 
 ```{r dataset-for-top-song, echo= FALSE, warning=FALSE}
 combined_1 <- combined %>%
@@ -276,7 +295,7 @@ p_value
 Using the typical significance level of 0.05, we reject the null hypothesis. Given that the p-value is 0, there is strong evidence that the majority of #1 Billboard songs are of the pop genre. 
 
 
-To verify our conclusion from above, we also decided to perform a confidence interval Test. We decided to do a 95% confidence interval test since that seems to be the typical confidence interval.  
+To verify our conclusion from above, we also decided to perform a confidence interval Test. We decided to do a 95% confidence interval test since that seems to be the typical confidence interval. To perform this test, we first created a bootstrap distribution, then found the range of the middle 95% of the bootstrap distribution. 
 
 ```{r create-bootstrap, echo= FALSE, warning=FALSE}
 set.seed(2)
