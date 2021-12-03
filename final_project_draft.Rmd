@@ -15,7 +15,7 @@ The data was found on TidyTuesday and is from Data.World with the original data 
 From this dataset, we're interested in examining songs from 2000 to today. This gave us 114,319 datapoints. Since there are so many song attributes in the dataset, we decided to focus on attributes that are easily identifiable through hearing by the general population: genre, danceability, energy, speechiness, valence, and tempo. For more details about our variables, please refer to our ReadMe. Our main research question is: what factors influence a song's ranking?
 
 
-```{r load-packages, message= F, echo= FALSE}
+```{r load-packages, message= F, warning= FALSE, echo= FALSE}
 library(tidyverse) 
 library(tidymodels)
 library(stringr)
@@ -102,7 +102,7 @@ combined %>%
 
 When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
 
-At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, our computational analytical techniques may be more useful.
+At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, we used linear regression.
 
 ## Testing Predictors
 
@@ -163,11 +163,6 @@ tidy(overall_model)
 glance(overall_model)$r.squared
 ```
 
-<<<<<<< HEAD
-=======
-
-In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
->>>>>>> 98282979942a9c67f7f0573d21431c5cf1e9922d
 
 ## Looking into #1 Billboard Songs
 
@@ -316,6 +311,11 @@ We are 95% confident that the proportion of #1 Billboard songs that are of the p
 
 Need to add: This will require a summary of what you have learned about your research question along with statistical arguments supporting your conclusions. You should critique your own methods and provide suggestions for improving your analysis and future work. Issues pertaining to the reliability and validity of your data and the appropriateness of the statistical analyses should also be discussed. Also include a brief paragraph on what you would do differently if you were able to start over with the project.
 
+To summarize, our main research question is: what factors influence a song's ranking? We visualized the relationship between weekly song positions and the audio features that we focused on. Through those, we found that danceability 
+
+Through our data analysis, we realized that the sheer amount of data made it hard for us to find patterns. For example, since there were so many data points, it made it hard to fit our linear models to is, as evidenced by the r-squared values. Additionally, it was hard to predict songs' popularity with numbers. We were able to create a general analysis on the factors that influence song rankings. However,... 
+
+We also realized that besides the song itself, the performers who performed them mattered too. 
 
 - scope of the data => made it hard to fit our linear models to it
 - how to predict song's data on numbers
