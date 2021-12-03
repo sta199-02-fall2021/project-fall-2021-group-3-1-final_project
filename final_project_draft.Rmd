@@ -182,6 +182,10 @@ Arguably, many artists' want to have a #1 Billboard song. So, to further investi
 
 Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that we hypothesize that that happier songs with medium tempos will be #1 Billboard songs. We separated the dataset by seasons and looked at the distribution of attributes' values by creating boxplots. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
+In figure 2.A, the tempo of Billboard #1 songs are highest in the winter and lowest in the spring, although the differences between tempo across seasons is quite small. In figure 2.B, the energy of Billboard #1 songs have a clear relationship between the seasons as summer as significantly the highest energy songs compared to winter. This makes sense because colder weather pairs better with slower songs and summery, warm weather pairs well with high-energy bops. Spring and fall have similar energy songs most likely due to the smaller difference in temperatures between the two seasons, compared to the wider temperature difference with winter and summer. In figure 2.C, winter and fall tend to have songs with lower valence compared to spring and summer. This makes sense with trends like sad-girl autumn and the winter blues. Because seasons can affect the moods of artists and consumers, people with lower moods in the cooler seasons of fall and winter, might consume more of the lower valence music in winter and fall. In figure 2.D, summer unsurprisingly has the most danceable #1 songs since summer also has the highest energy songs. Winter with lower valence, and lower energy songs, also have lowest energy songs. Spring has slightly more danceable songs than fall, but not by much. 
+In figure 2.E, the box-plot illstrates that the most #1 songs regardless of the season tend to have low speechiness, or minimal spoken word. For some reason, #1 songs charting in the summer and spring have slighly more speechiness than winter and fall. Overall, each of the boxplots can reveal unique relationships between #1 songs and various attributes seasonally. 
+
+
 ```{r group-dataset-by-season, echo= FALSE, warning=FALSE}
 combined$month <- as.numeric(combined$month)
 season_data <- combined %>%
@@ -204,6 +208,7 @@ ggplot(data = season_data,
        mapping = aes(x = season, y = tempo)) +
   geom_boxplot() + coord_flip() +
   labs(title = "How does tempo relate to #1 songs seasonally?", 
+       subtitle = "Figure 2.A", 
        x = "Season", y = "Tempo")
 
 ```
@@ -212,7 +217,8 @@ ggplot(data = season_data,
 ggplot(data = season_data, 
        mapping = aes(x = season, y = energy)) +
   geom_boxplot() + coord_flip() +
-  labs(title = "How does energy relate to #1 songs seasonally?", 
+  labs(title = "How does energy relate to #1 songs seasonally?",
+       subtitle = "Figure 2.B", 
        x = "Season", y = "Energy")
 ```
 
@@ -220,7 +226,8 @@ ggplot(data = season_data,
 ggplot(data = season_data, 
        mapping = aes(x = season, y = valence)) +
   geom_boxplot() + coord_flip() +
-  labs(title = "How does valence relate to #1 songs seasonally?", 
+  labs(title = "How does valence relate to #1 songs seasonally?",
+       subtitle = "Figure 2.C", 
        x = "Season", y = "Valence")
 ```
 
@@ -229,6 +236,7 @@ ggplot(data = season_data,
        mapping = aes(x = season, y = danceability)) +
   geom_boxplot() + coord_flip() +
   labs(title = "How does danceability relate to #1 songs seasonally?", 
+       subtitle = "Figure 2.D",
        x = "Season", y = "Danceability")
 ```
 
@@ -237,6 +245,7 @@ ggplot(data = season_data,
        mapping = aes(x = season, y = speechiness)) +
   geom_boxplot() + coord_flip() +
   labs(title = "How does speechiness relate to #1 songs seasonally?", 
+       subtitle = "Figure 2.E",
        x = "Season", y = "Speechiness")
 ```
 
