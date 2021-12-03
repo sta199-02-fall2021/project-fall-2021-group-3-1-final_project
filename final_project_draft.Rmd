@@ -50,7 +50,11 @@ To start answering our research question, we first took a general look at how at
 
 ## Correlation Between Song Rankings and Song Attributes
 
+<<<<<<< HEAD
+To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and valence will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
+=======
 To accomplish this, we created visualizations to see the correlation between songs' weekly positions and song attributes. We hypothesize that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
+>>>>>>> 16c1a67c8ea12db4cd1be8fdfddbc8fe07323058
 
 
 ```{r visualizing-factors, fig.height= 2, fig.width= 3, echo= FALSE, warning=FALSE}
@@ -96,8 +100,9 @@ combined %>%
         plot.subtitle = element_text(size = 6))
 ```
 
+When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
 
-*Insert discussion about the graph*
+At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, our computational analytical techniques may be more useful.
 
 ## Testing Predictors
 
