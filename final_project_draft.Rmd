@@ -225,7 +225,7 @@ Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre.
 
 $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
 
-To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible. After constructing our null distribution, we created a visualization of it and also calculated the p-value. Since our alternative hypothesis is greater than 0.5, we did not do a two-sided p-value; we only looked at it from the greater direction. 
+To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible. After constructing our null distribution, we created a visualization of it (Figure 3) and also calculated the p-value. Since our alternative hypothesis is greater than 0.5, we did not do a two-sided p-value; we only looked at it from the greater direction. 
 
 ```{r dataset-for-top-song, echo= FALSE, warning=FALSE}
 combined_1 <- combined %>%
@@ -256,7 +256,11 @@ p_hat <- combined_1 %>%
 
 ```{r visualizing-null-p-value, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 visualize(null_dist) + 
-  shade_p_value(obs_stat= p_hat, direction= "greater")
+  shade_p_value(obs_stat= p_hat, direction= "greater") + 
+  labs(title= "Simulation-Based Null Distribution", 
+       subtitle= "Figure 3", 
+       x= "Proportion", 
+       y= "Count")
 
 p_value <- null_dist %>%
   get_p_value(obs_stat= p_hat, direction= "greater") %>%
@@ -293,3 +297,8 @@ We are 95% confident that the proportion of #1 Billboard songs that are of the p
 
 Need to add: This will require a summary of what you have learned about your research question along with statistical arguments supporting your conclusions. You should critique your own methods and provide suggestions for improving your analysis and future work. Issues pertaining to the reliability and validity of your data and the appropriateness of the statistical analyses should also be discussed. Also include a brief paragraph on what you would do differently if you were able to start over with the project.
 
+
+- scope of the data => made it hard to fit our linear models to it
+- how to predict song's data on numbers
+- catchiness variable
+- up to performers themselves (a lot more factors than we chose to focus on/what the data had)
