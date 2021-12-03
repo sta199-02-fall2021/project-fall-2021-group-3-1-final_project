@@ -92,42 +92,43 @@ combined %>%
 
 To further examine the relationship, we looked to see how well each song attribute predicted songs' weekly positions. Given the results from above, we hypothesize that danceability would be one of the highest predictors, since its visualization is one of the only visualizations to show a difference between differently ranked songs. We created linear regression models for each attribute and also a linear model with all the attributes as the explanatory variables. We then found the r-squared value to see how well the explanatory variable(s) predicted songs' weekly positions. 
 
-```{r danceability linear-model, echo= FALSE}
+Danceability Linear Model
+```{r danceability linear-model, echo= FALSE, warning=FALSE}
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ danceability, data = combined)
 tidy(danceability_model)
 ```
-
-```{r Energy Linear Model, echo= FALSE}
+Energy Linear Model
+```{r Energy Linear Model, echo= FALSE, warning=FALSE}
 energy_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ energy, data = combined)
 tidy(energy_model)
 ```
-
-```{r Speechiness Linear Model, echo= FALSE}
+Speechiness Linear Model
+```{r Speechiness Linear Model, echo= FALSE, warning=FALSE}
 speechiness_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ speechiness, data = combined)
 tidy(speechiness_model)
 ```
-
-```{r Valence Linear Model, echo= FALSE}
+Valence Linear Model
+```{r Valence Linear Model, echo= FALSE, warning=FALSE}
 valence_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ valence, data = combined)
 tidy(valence_model)
 ```
-
-```{r Tempo Linear Model, echo= FALSE}
+Tempo Linear Model
+```{r Tempo Linear Model, echo= FALSE, warning=FALSE}
 tempo_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ tempo, data = combined)
 tidy(tempo_model)
 ```
-
-```{r Overall Linear Model, echo= FALSE}
+Overall Linear Model
+```{r Overall Linear Model, echo= FALSE, warning=FALSE}
 overall_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
@@ -136,7 +137,7 @@ tidy(overall_model)
 
 Calculation of $R^2$ Values of the different predictors.
 
-```{r r-squared-values, echo= FALSE}
+```{r r-squared-values, echo= FALSE, warning=FALSE}
 glance(danceability_model)$r.squared
 glance(energy_model)$r.squared
 glance(speechiness_model)$r.squared
@@ -145,8 +146,7 @@ glance(tempo_model)$r.squared
 glance(overall_model)$r.squared
 ```
 
-*insert discussion* 
-
+In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
 
 ## Looking into #1 Billboard Songs
 
@@ -156,7 +156,7 @@ Arguably, many artists' want to have a #1 Billboard song. So, to further investi
 
 Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that we hypothesize that that happier songs with medium tempos will be #1 Billboard songs. We separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
 
-```{r group-dataset-by-season, echo= FALSE}
+```{r group-dataset-by-season, echo= FALSE, warning=FALSE}
 combined$month <- as.numeric(combined$month)
 season_data <- combined %>%
   filter(week_position == 1) %>%
@@ -173,7 +173,7 @@ season_data <- combined %>%
 
 ```
 
-```{r season-visualization, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r season-visualization, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = tempo)) +
   geom_boxplot() + coord_flip() +
@@ -182,7 +182,7 @@ ggplot(data = season_data,
 
 ```
 
-```{r season-energy-viz, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r season-energy-viz, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = energy)) +
   geom_boxplot() + coord_flip() +
@@ -190,7 +190,7 @@ ggplot(data = season_data,
        x = "Season", y = "Energy")
 ```
 
-```{r season-valence-viz, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r season-valence-viz, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = valence)) +
   geom_boxplot() + coord_flip() +
@@ -198,7 +198,7 @@ ggplot(data = season_data,
        x = "Season", y = "Valence")
 ```
 
-```{r season-energy-dance, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r season-energy-dance, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = danceability)) +
   geom_boxplot() + coord_flip() +
@@ -206,7 +206,7 @@ ggplot(data = season_data,
        x = "Season", y = "Danceability")
 ```
 
-```{r season-energy-speechiness, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r season-energy-speechiness, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = speechiness)) +
   geom_boxplot() + coord_flip() +
@@ -225,19 +225,19 @@ $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
 
 To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible.
 
-```{r dataset-for-top-song, echo= FALSE}
+```{r dataset-for-top-song, echo= FALSE, warning=FALSE}
 combined_1 <- combined %>%
   filter(week_position == 1)
 ```
 
-```{r is-it-pop, echo= FALSE}
+```{r is-it-pop, echo= FALSE, warning=FALSE}
 combined_1 <- combined_1 %>%
   filter(spotify_genre != "[]") %>%
   mutate(is_pop= ifelse(str_detect(spotify_genre, "pop")== TRUE, "Yes", "No"))
 ```
 
 
-```{r null-distribution, echo= FALSE}
+```{r null-distribution, echo= FALSE, warning=FALSE}
 set.seed(1)
 null_dist <- combined_1 %>%
   specify(response= is_pop, success = "Yes") %>%
@@ -252,7 +252,7 @@ p_hat <- combined_1 %>%
   pull()
 ```
 
-```{r visualizing-null-p-value, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r visualizing-null-p-value, fig.height= 2, fig.width= 5, echo= FALSE, warning=FALSE}
 visualize(null_dist) + 
   shade_p_value(obs_stat= p_hat, direction= "greater")
 
@@ -267,7 +267,7 @@ Using the typical significance level of 0.05, we reject the null hypothesis. Giv
 
 To verify our conclusion from above, we also decided to perform a confidence interval Test. We decided to do a 95% confidence interval test since that seems to be the typical confidence interval.  
 
-```{r create-bootstrap, echo= FALSE}
+```{r create-bootstrap, echo= FALSE, warning=FALSE}
 set.seed(2)
 boot_dist <- combined_1 %>%
   specify(response= is_pop, success= "Yes") %>%
@@ -276,7 +276,7 @@ boot_dist <- combined_1 %>%
 
 ```
 
-```{r CI-test, echo= FALSE}
+```{r CI-test, echo= FALSE, warning=FALSE}
 CI <- boot_dist %>%
   summarize(lower= quantile(stat, 0.025), 
             upper= quantile(stat, 0.975))
