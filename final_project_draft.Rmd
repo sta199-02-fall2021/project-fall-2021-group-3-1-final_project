@@ -61,7 +61,7 @@ combined %>%
   geom_hex() + 
   labs(title = "How Does Danceability affect the 
        Weekly Position of a Song?",
-       Subtile = "1.A",
+       subtitle = "Figure 1.A",
        x = "Danceability", y = "Weekly Position") +
   theme(plot.title = element_text(size = 8),  
         plot.subtitle = element_text(size = 6))
@@ -71,7 +71,7 @@ combined %>%
   geom_hex() + 
   labs(title = "How Does Valence affect the 
        Weekly Position of a Song?",
-       subtitle = "1.C",
+       subtitle = "Figure 1.B",
        x = "Valence", y = "Weekly Position") +
   theme(plot.title = element_text(size = 8), 
         plot.subtitle = element_text(size = 6))
@@ -81,7 +81,7 @@ combined %>%
   geom_hex() + 
   labs(title = "How Does Tempo affect the 
        Weekly Position of a Song?", 
-       subtitle = "1.D",
+       subtitle = "Figure 1.C",
        x = "Tempo", y = "Weekly Position") +
   theme(plot.title = element_text(size = 8), 
         plot.subtitle = element_text(size = 6))
@@ -91,26 +91,26 @@ combined %>%
   geom_hex() + 
   labs(title = "How Does Speechiness affect the 
        Weekly Position of a Song?", 
-       subtitle = "1.E",
+       subtitle = "Figure 1.D",
        x = "Speechiness", y = "Weekly Position") +
   theme(plot.title = element_text(size = 8), 
         plot.subtitle = element_text(size = 6))
 ```
 
-When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
+When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability (figure 1.A) seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence (figure 1.B) appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo (figure 1.C) is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness (figure 1.D) seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
 
 At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, we used linear regression.
 
 ## Testing Predictors
 
-To further examine the relationship, we looked to see how well each song attribute predicted songs' weekly positions. Given the results from above, we hypothesize that danceability would be one of the highest predictors, since its visualization is one of the only visualizations to show a difference between differently ranked songs. We created linear regression models for each attribute and also a linear model with all the attributes as the explanatory variables. We then found the r-squared value to see how well the explanatory variable(s) predicted songs' weekly positions. 
+To further examine the relationship, we looked to see how well each song attribute predicted songs' weekly positions. Given the results from above, we hypothesize that danceability would be one of the highest predictors, since its visualization is one of the only visualizations to show a difference between differently ranked songs. We created linear regression models for each attribute and also a linear model with all the attributes as the explanatory variables. We then found the R-squared values for each model to see how well the explanatory variable(s) predicted songs' weekly positions. 
 
 Danceability Linear Model and its R-Squared Value: 
 ```{r danceability linear-model, echo= FALSE, warning=FALSE}
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ danceability, data = combined)
-tidy(danceability_model)
+tidy(danceability_model) 
 
 glance(danceability_model)$r.squared
 ```
@@ -173,7 +173,7 @@ This model shows that, if all else is held constant for each additional point in
 Similarly, our adjusted $R^2$ value for the overall model is 0.0177. This tells us that, even after penalties for using multiple variables, the model with danceablity, energy, speechiness, valence, and tempo accounts for more of the variation in song position, 1.77%.
 
 $$ \widehat{weeklyposition} = 60.66 - 22.87(danceability) + 6.66(energy) + 1.40(speechiness) - 3.53(valence) + .0118(tempo)$$
-When looking at the estimates, it is important to keep in mind that negatives for slopes are better for a song's ranking. This is because a "decrease" in ranking actually brings it closer to the #1 spot! With that said, we see that increased danceability and valence seem to be better for a songs ranking, all else held constant, while increases in the other variables are not.
+When looking at the estimates, it is important to keep in mind that negatives for slopes are better for a song's ranking. This is because a "decrease" in ranking actually brings it closer to the #1 spot! With that said, we see that increased danceability and valence seem to be better for a songs ranking, all else held constant, while increases in the other variables do not.
 
 
 ## Looking into #1 Billboard Songs
@@ -252,7 +252,7 @@ In figure 2.A, the tempo of Billboard #1 songs are highest in the winter and low
 In figure 2.E, the box-plot illstrates that the most #1 songs regardless of the season tend to have low speechiness, or minimal spoken word. For some reason, #1 songs charting in the summer and spring have slighly more speechiness than winter and fall. Overall, each of the boxplots can reveal unique relationships between #1 songs and various attributes seasonally. 
 
 ## Testing Pop Genre
-To examine the correlation between genre and #1 Billboard songs, we created a null and alternative hypothees to test with simulation-based methods. Since the labels "pop genre" and "popular genre" tend to be interchangeable, we predict that the majority of songs that are #1 on the Billboard are of the pop genre. 
+To examine the correlation between genre and #1 Billboard songs, we created a null and alternative hypotheses to test with simulation-based methods. Since the labels "pop genre" and "popular genre" tend to be interchangeable, we predict that the majority of songs that are #1 on the Billboard are of the pop genre. 
 
 Null Hypothesis: 50% of the #1 Billboard songs are of the pop genre. 
 Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre. 
@@ -329,11 +329,9 @@ We are 95% confident that the proportion of #1 Billboard songs that are of the p
 
 ## Conclusion
 
-Need to add: This will require a summary of what you have learned about your research question along with statistical arguments supporting your conclusions. You should critique your own methods and provide suggestions for improving your analysis and future work. Issues pertaining to the reliability and validity of your data and the appropriateness of the statistical analyses should also be discussed. Also include a brief paragraph on what you would do differently if you were able to start over with the project.
-
 To summarize, our main research question is: what factors influence a song's ranking? We visualized the relationship between weekly song positions and the audio features that we focused on. Through those, we found that danceability was the audio feature that correlated the most strongly with weekly song positions. This was confirmed with our linear models. We found that when you use all the audio features to create a linear model, it was the strongest predictor of weekly song positions. However, the R-squared values of that model and the danceability model were similar. When we looked at seasons, we realized that each season had their own "preference" for each audio feature. We confirmed our hypothesis that the majority of #1 Billboard songs are of the pop genre through hypotheses testing. In short, we found that higher ranked Billboard songs had higher danceabilities, seasons influence the audio features in #1 songs, and #1 songs are comprised mostly of pop. 
 
-Through our data analysis, we realized that the sheer amount of data made it hard for us to find patterns. For example, since there were so many data points, it made it hard to fit our linear models to our data, as evidenced by the r-squared values. We were able to create a general analysis on the factors that influence song rankings. However, we weren't able to look at specifics. For example, for genre, we only looked to see if the genre column had the word "pop" in them. Given the many genres of music and subgenres of pop, our analysis was pretty broad. 
+Through our data analysis, we realized that the sheer amount of data made it hard for us to find patterns. For example, since there were so many data points, it made it hard to fit our linear models to our data, as evidenced by the R-squared values. We were able to create a general analysis on the factors that influence song rankings. However, we weren't able to look at specifics. For example, for genre, we only looked to see if the genre column had the word "pop" in them. Given the many genres of music and subgenres of pop, our analysis was pretty broad. 
 
 We also realized there are a multitude of other variables that our data set and our analyses didn't cover that could influence songs' weekly positions. Besides the song itself, the performers matter too. For example, if Adele and a small artist both released songs (and assuming the songs have similar numbers for their audio features), Adele's song would be expected to chart on the Billboard and rank highly. However, the small artist would not. In fact, the small artist might not even chart on the Billboard because their audience could be focused on entirely Adele's new song. Major artists could greatly impact the Billboard rankings and could influence other artists and when these smaller artists release their songs. 
 

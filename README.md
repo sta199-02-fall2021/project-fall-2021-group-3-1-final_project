@@ -1,4 +1,13 @@
+Loading in our data: 
+Here's the link to our data csv and how to load them in. 
+
+billboard <- 
+  readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
+audio_features <-
+  readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/audio_features.csv')
+
 Variable description:
+
 Genre - is based on what genre Spotify puts the song into. Genre are categories that a song can put into based on musical techniques used, the cultural context behind the song and the spirit of the themes.
 
 Danceability - describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
