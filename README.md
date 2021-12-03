@@ -1,5 +1,6 @@
 Loading in our data: 
-Here's the link to our data csv and how to load them in. 
+
+Here's the link to our data csv and how to load them in. The links to the data is also in the Data folder in our repo. 
 
 billboard <- 
   readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
