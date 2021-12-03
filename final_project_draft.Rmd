@@ -50,11 +50,8 @@ To start answering our research question, we first took a general look at how at
 
 ## Correlation Between Song Rankings and Song Attributes
 
-<<<<<<< HEAD
-To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and valence will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
-=======
+
 To accomplish this, we created visualizations to see the correlation between songs' weekly positions and song attributes. We hypothesize that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
->>>>>>> 16c1a67c8ea12db4cd1be8fdfddbc8fe07323058
 
 
 ```{r visualizing-factors, fig.height= 2, fig.width= 3, echo= FALSE, warning=FALSE}
@@ -160,14 +157,22 @@ overall_model <- linear_reg() %>%
   fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
 tidy(overall_model)
 
-glance(overall_model)$r.squared
+glance(overall_model)$adj.r.squared
 ```
 
-<<<<<<< HEAD
-=======
+In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the vast amount of data that there was, no one linear model showed significant correlation in testing which attribute of a song was the strongest predictor. However, we cannot discount that the models do show the variation within the data to some extent.
 
-In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
->>>>>>> 98282979942a9c67f7f0573d21431c5cf1e9922d
+Looking at the $R^2$ values, we can see that the danceability model and the overall model were the strongest predictors and accounted for the greatest amount of variation in the data. The danceability model presented a $R^2$ value of 0.0164 which signifies that about 1.64% of the variation can be accounted for through the linear model.
+
+
+$$ \widehat{weeklyposition} = 66.86 - 25.8(danceability) $$
+
+This model shows that, if all else is held constant for each additional point increase in danceability causes the the weekly position of the song to decrease on average by 25.8. This shows that an increase in danceability causes a corresponding higher ranking in the song. This intuitively makes sense, as one would think that if a song seems to be more danceable then people would like it more and therefore it would be higher on the billboard.
+
+Similarly, our adjusted $R^2$ value for the overall model is 0.0177. This tells us that, even after penalties for using multiple variables, the model with danceablity, energy, speechiness, valence, and tempo accounts for more of the variation in song position, 1.77%.
+
+$$ \widehat{weeklyposition} = 60.66 - 22.87(danceability) + 6.66(energy) + 1.40(speechiness) - 3.53(valence) + .0118(tempo)$$
+When looking at the estimates, it is important to keep in mind that negatives for slopes are better for a song's ranking. This is because a "decrease" in ranking actually brings it closer to the #1 spot! With that said, we see that increased danceability and valence seem to be better for a songs ranking, all else held constant, while increases in the other variables are not.
 
 ## Looking into #1 Billboard Songs
 
