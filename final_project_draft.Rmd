@@ -53,36 +53,57 @@ To start answering our research question, we first took a general look at how at
 To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
 
 
-```{r visualizing-factors, fig.height= 2, fig.width= 5, echo= FALSE}
+```{r visualizing-factors, fig.height= 2, fig.width= 3, echo= FALSE, warning=FALSE}
+par(mfrow = c(3,2))
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Danceability affect the Weekly Position of a Song?",
-       x = "Danceability", y = "Weekly Position")
+  labs(title = "How Does Danceability affect the 
+       Weekly Position of a Song?",
+       Subtile = "1.A",
+       x = "Danceability", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8),  
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(mapping = aes(x = instrumentalness, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Instrumentalness affect the Weekly Position of a Song?",
-       x = "Instrumentalness", y = "Weekly Position")
+  labs(title = "How Does Instrumentalness affect the 
+       Weekly Position of a Song?",
+       subtitle = "1.B",
+       x = "Instrumentalness", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(mapping = aes(x = valence, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Valence affect the Weekly Position of a Song?",
-       x = "Valence", y = "Weekly Position")
+  labs(title = "How Does Valence affect the 
+       Weekly Position of a Song?",
+       subtitle = "1.C",
+       x = "Valence", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(aes(x = tempo, y = week_position)) + 
   geom_hex() + 
-  labs(title = "How Does Tempo affect the Weekly Position of a Song?",
-       x = "Tempo", y = "Weekly Position")
+  labs(title = "How Does Tempo affect the 
+       Weekly Position of a Song?", 
+       subtitle = "1.D",
+       x = "Tempo", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 
 combined %>%
   ggplot(mapping = aes(x = speechiness, y = week_position)) +
   geom_hex() + 
-  labs(title = "How Does Speechiness affect the Weekly Position of a Song?",
-       x = "Speechiness", y = "Weekly Position")
+  labs(title = "How Does Speechiness affect the 
+       Weekly Position of a Song?", 
+       subtitle = "1.E",
+       x = "Speechiness", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 ```
 
 
@@ -146,7 +167,6 @@ glance(tempo_model)$r.squared
 glance(overall_model)$r.squared
 ```
 
-In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
 
 ## Looking into #1 Billboard Songs
 
