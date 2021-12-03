@@ -92,59 +92,61 @@ combined %>%
 
 To further examine the relationship, we looked to see how well each song attribute predicted songs' weekly positions. Given the results from above, we hypothesize that danceability would be one of the highest predictors, since its visualization is one of the only visualizations to show a difference between differently ranked songs. We created linear regression models for each attribute and also a linear model with all the attributes as the explanatory variables. We then found the r-squared value to see how well the explanatory variable(s) predicted songs' weekly positions. 
 
-Danceability Linear Model
+Danceability Linear Model and its R-Squared Value: 
 ```{r danceability linear-model, echo= FALSE, warning=FALSE}
 danceability_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ danceability, data = combined)
 tidy(danceability_model)
+
+glance(danceability_model)$r.squared
 ```
-Energy Linear Model
+Energy Linear Model and its R-Squared Value: 
 ```{r Energy Linear Model, echo= FALSE, warning=FALSE}
 energy_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ energy, data = combined)
 tidy(energy_model)
+
+glance(energy_model)$r.squared
 ```
-Speechiness Linear Model
+Speechiness Linear Model and its R-Squared Value: 
 ```{r Speechiness Linear Model, echo= FALSE, warning=FALSE}
 speechiness_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ speechiness, data = combined)
 tidy(speechiness_model)
+
+glance(speechiness_model)$r.squared
 ```
-Valence Linear Model
+Valence Linear Model and its R-Squared Value: 
 ```{r Valence Linear Model, echo= FALSE, warning=FALSE}
 valence_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ valence, data = combined)
 tidy(valence_model)
+
+glance(valence_model)$r.squared
 ```
-Tempo Linear Model
+Tempo Linear Model and its R-Squared Value: 
 ```{r Tempo Linear Model, echo= FALSE, warning=FALSE}
 tempo_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ tempo, data = combined)
 tidy(tempo_model)
+
+glance(tempo_model)$r.squared
 ```
-Overall Linear Model
+Overall Linear Model and its R-Squared Value: 
 ```{r Overall Linear Model, echo= FALSE, warning=FALSE}
 overall_model <- linear_reg() %>%
   set_engine("lm") %>%
   fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
 tidy(overall_model)
-```
 
-Calculation of $R^2$ Values of the different predictors.
-
-```{r r-squared-values, echo= FALSE, warning=FALSE}
-glance(danceability_model)$r.squared
-glance(energy_model)$r.squared
-glance(speechiness_model)$r.squared
-glance(valence_model)$r.squared
-glance(tempo_model)$r.squared
 glance(overall_model)$r.squared
 ```
+
 
 In analyzing which predictor correlated the strongest with the weekly position of the song we found that due to the 
 
