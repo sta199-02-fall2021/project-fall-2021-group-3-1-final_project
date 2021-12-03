@@ -1,54 +1,36 @@
 ---
-title: "Final Project Draft"
+title: "Team 3-1: Analyzing Billboard Songs"
 output:
   pdf_document: default
   html_document: default
-authors: "Aimi, Sonya, Ethan, Luca"
+author: "Aimi, Sonya, Ethan, Luca"
 ---
 
 ## Introduction
 
-
-**ASK ABOUT PUTTING CODEBOOK IN THE README FILE AND NOT IN THE PROJECT ITSELF email**
-
 “The Billboard Hot 100 is the music industry standard record chart in the United States for songs, published weekly by Billboard magazine. Chart rankings are based on sales (physical and digital), radio play, and online streaming in the United States.”
 
-The data was found on TidyTuesday and is from Data.World with the original data points found on Billboard.com and Spotify. The cases are songs from the certain week(s) in which they appeared on the Billboard 100 chart. It includes every weekly Hot 100 singles chart from Billboard.com. Relevant variables from Billboard include song, performer, instance (ordinal for which appearance on the chart it is for the song), previous_week_position, and more. Relevant variables from Spotify include spotify_genre, spotify_track_duration, danceability (double 0-1; factoring in tempo, rhythm stability, beat strength), energy (double 0-1; perceptual measure of intensity and activity), key, acousticness (double 0-1), and valence (double 0-1; “musical positiveness”), and more. Both include a song name in the variable "song" that we'll use for joining. 
+The data was found on TidyTuesday and is from Data.World with the original data points found on Billboard.com and Spotify. The cases are songs from the certain week(s) in which they appeared on the Billboard 100 chart. It includes every weekly Hot 100 singles chart from Billboard.com and audio features (such as genre, danceability) from Spotify.
 
-From this dataset, we're interested in examining songs from 2000 to today and songs that made it to the #1 song position on the Billboard 100. Since there are so many song attributes in the dataset, we decided to focus on attributes that are easily identifiable through hearing by the general population: genre, danceability, energy, speechiness, valence, and tempo. Our main research question is: what factors play a role in a song becoming #1 on the Billboard 100 and the longevity of songs on the Billboard 100 after peaking at #1?
+From this dataset, we're interested in examining songs from 2000 to today. Since there are so many song attributes in the dataset, we decided to focus on attributes that are easily identifiable through hearing by the general population: genre, danceability, energy, speechiness, valence, and tempo. For more details about our variables, please refer to our ReadMe. Our main research question is: what factors influence a song's ranking?
 
 
-Variable description:
-Genre - is based on what genre Spotify puts the song into. Genre are categories that a song can put into based on musical techniques used, the cultural context behind the song and the spirit of the themes.
-
-Danceability - describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
-
-Energy - a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.
-
-Speechiness - detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.
-
-Valence - A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).
-
-Tempo - The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.
-
-```{r load-packages, message= F}
+```{r load-packages, message= F, echo= FALSE}
 library(tidyverse) 
 library(tidymodels)
 library(stringr)
 ```
-## Setting Up Our Project
 
-```{r load-in-data, message=FALSE, warning=FALSE}
+
+```{r load-in-data, message=FALSE, warning=FALSE, echo= FALSE}
 billboard <- 
   readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/billboard.csv')
 audio_features <-
   readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-14/audio_features.csv')
 ```
 
-To conduct our work, we first need to combine our datasets, which is slightly complicated. For the billboard dataset, each entry is not a song, but rather the position of a song for each week. For example, a song is on the Billboard Top 100 for multiple weeks, it would be entered multiple times, each time with it's week's ranking. In contrast, each of the audio_feature's rows is a song. Songs are not entered in multiple times. To be able to combine the datasets together, we have to condense the Billboard 100 to having each row represent a song. Since we only care about #1 songs and songs from the 2000s, we plan on filtering the billboard data set so that there is only one song that appears for each week, the #1 song. If there are songs that remain #1 for multiple weeks we will filter these out so they only appear once. After creating the new dataset, we will hopefulle be able to merge the 2 data sets creating a final large dataset with x number of observations and 31 variables. (we need to discuss with the TA and professor smith about how to do this)
 
-
-```{r creating-dataset}
+```{r creating-dataset, message=FALSE, warning=FALSE, echo= FALSE}
 billboard2 <- billboard %>% 
   mutate(date = as.Date(week_id, format = "%m/%d/%Y", origin = "1958-08-02")) %>%
   mutate(month = format(date, "%m")) %>%
@@ -62,15 +44,16 @@ combined <- all_combined %>%
 ```
 
 
-## Attributes and Time
+## Looking into Song Rankings
 
-##By Rank
+To start answering our research question, we first took a general look at how attributes influence song rankings. 
+
+## Correlation Between Song Rankings and Song Attributes
+
+To accomplish this, we created a visualization to see to the correlation between songs' weekly positions and song attributes. We first hypothesized that songs with higher speechiness and tempo will be ranked higher, given the rising popularity of rap, and that other attributes would correlate less with songs' rankings. 
 
 
-We looked at the differences between attributes of song ranks. 
-
-
-```{r visualizing-factors, fig.height= 2, fig.width= 3}
+```{r visualizing-factors, fig.height= 2, fig.width= 5, echo= FALSE}
 combined %>%
   ggplot(mapping = aes(x = danceability, y = week_position)) +
   geom_hex() + 
@@ -105,12 +88,75 @@ combined %>%
 
 *Insert discussion about the graph*
 
+## Testing Predictors
 
-## By Season
+To further examine the relationship, we looked to see how well each song attribute predicted songs' weekly positions. Given the results from above, we hypothesize that danceability would be one of the highest predictors, since its visualization is one of the only visualizations to show a difference between differently ranked songs. We created linear regression models for each attribute and also a linear model with all the attributes as the explanatory variables. We then found the r-squared value to see how well the explanatory variable(s) predicted songs' weekly positions. 
 
-Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that could mean that happier songs with medium tempos are preferred. To further examine attributes and #1 songs, we separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
+```{r danceability linear-model, echo= FALSE}
+danceability_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ danceability, data = combined)
+tidy(danceability_model)
+```
 
-```{r group-dataset-by-season}
+```{r Energy Linear Model, echo= FALSE}
+energy_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ energy, data = combined)
+tidy(energy_model)
+```
+
+```{r Speechiness Linear Model, echo= FALSE}
+speechiness_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ speechiness, data = combined)
+tidy(speechiness_model)
+```
+
+```{r Valence Linear Model, echo= FALSE}
+valence_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ valence, data = combined)
+tidy(valence_model)
+```
+
+```{r Tempo Linear Model, echo= FALSE}
+tempo_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ tempo, data = combined)
+tidy(tempo_model)
+```
+
+```{r Overall Linear Model, echo= FALSE}
+overall_model <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
+tidy(overall_model)
+```
+
+Calculation of $R^2$ Values of the different predictors.
+
+```{r r-squared-values, echo= FALSE}
+glance(danceability_model)$r.squared
+glance(energy_model)$r.squared
+glance(speechiness_model)$r.squared
+glance(valence_model)$r.squared
+glance(tempo_model)$r.squared
+glance(overall_model)$r.squared
+```
+
+*insert discussion* 
+
+
+## Looking into #1 Billboard Songs
+
+Arguably, many artists' want to have a #1 Billboard song. So, to further investigate what factors play a role in songs' rankings, we looked at factors that influence #1 Billboard songs. 
+
+## Seasons
+
+Seasons can influence what song attributes are preferred. For example, winter has many holidays, so that we hypothesize that that happier songs with medium tempos will be #1 Billboard songs. We separated the dataset by seasons and looked at the distribution of attributes' values. We defined fall as from September to November, winter as from December to February, spring as March to May, and summer as June to August. 
+
+```{r group-dataset-by-season, echo= FALSE}
 combined$month <- as.numeric(combined$month)
 season_data <- combined %>%
   filter(week_position == 1) %>%
@@ -127,7 +173,7 @@ season_data <- combined %>%
 
 ```
 
-```{r season-visualization, fig.height= 2, fig.width= 3}
+```{r season-visualization, fig.height= 2, fig.width= 5, echo= FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = tempo)) +
   geom_boxplot() + coord_flip() +
@@ -136,7 +182,7 @@ ggplot(data = season_data,
 
 ```
 
-```{r season-energy-viz, fig.height= 2, fig.width= 3}
+```{r season-energy-viz, fig.height= 2, fig.width= 5, echo= FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = energy)) +
   geom_boxplot() + coord_flip() +
@@ -144,7 +190,7 @@ ggplot(data = season_data,
        x = "Season", y = "Energy")
 ```
 
-```{r season-valence-viz, fig.height= 2, fig.width= 3}
+```{r season-valence-viz, fig.height= 2, fig.width= 5, echo= FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = valence)) +
   geom_boxplot() + coord_flip() +
@@ -152,7 +198,7 @@ ggplot(data = season_data,
        x = "Season", y = "Valence")
 ```
 
-```{r season-energy-dance, fig.height= 2, fig.width= 3}
+```{r season-energy-dance, fig.height= 2, fig.width= 5, echo= FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = danceability)) +
   geom_boxplot() + coord_flip() +
@@ -160,16 +206,14 @@ ggplot(data = season_data,
        x = "Season", y = "Danceability")
 ```
 
-```{r season-energy-speechiness, fig.height= 2, fig.width= 3}
+```{r season-energy-speechiness, fig.height= 2, fig.width= 5, echo= FALSE}
 ggplot(data = season_data, 
        mapping = aes(x = season, y = speechiness)) +
   geom_boxplot() + coord_flip() +
   labs(title = "How does speechiness relate to #1 songs seasonally?", 
        x = "Season", y = "Speechiness")
 ```
-## Genre and Billboard #1 Songs
 
-*If this happens*: Since it seems like *insert factor or factors* don't really follow a pattern, we decided to remove *insert factor or factors* in the below analyses. 
 
 ## Testing Pop Genre
 To examine the correlation between genre and Billboard rankings, we created a null and alternative hypothees to test with simulation-based methods. Since the labels "pop genre" and "popular genre" tend to be interchangeable, we predict that the majority of songs that are #1 on the Billboard are of the pop genre. 
@@ -179,23 +223,21 @@ Alternative Hypothesis: Over 50% of the #1 Billboard songs are of the pop genre.
 
 $$H_0: p_{pop} = 0.5 \text{v.s.} H_a: p_{pop} > 0.5$$
 
-To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the spotify genre column. Though the column entries are formatted like a list, it is actually a string, as evidenced by the result of the typeof(). So, we used str_detect to detect the word "pop". If "pop" does appear, the is_pop variable will have a "Yes". If not, the is_pop variable will have a "No". With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible.
+To test our hypotheses, we first created a dataset of just the #1 Billboard songs. We then checked to see if the word "pop" appears in the Spotify genre column. With our dataset set up, we constructed a null distribution. We set the seed to make this reproducible.
 
-```{r dataset-for-top-song}
+```{r dataset-for-top-song, echo= FALSE}
 combined_1 <- combined %>%
   filter(week_position == 1)
-
-typeof(combined_1$spotify_genre)
 ```
 
-```{r is-it-pop}
+```{r is-it-pop, echo= FALSE}
 combined_1 <- combined_1 %>%
   filter(spotify_genre != "[]") %>%
   mutate(is_pop= ifelse(str_detect(spotify_genre, "pop")== TRUE, "Yes", "No"))
 ```
 
 
-```{r null-distribution}
+```{r null-distribution, echo= FALSE}
 set.seed(1)
 null_dist <- combined_1 %>%
   specify(response= is_pop, success = "Yes") %>%
@@ -210,7 +252,7 @@ p_hat <- combined_1 %>%
   pull()
 ```
 
-```{r visualizing-null-p-value, fig.height= 2, fig.width= 3}
+```{r visualizing-null-p-value, fig.height= 2, fig.width= 5, echo= FALSE}
 visualize(null_dist) + 
   shade_p_value(obs_stat= p_hat, direction= "greater")
 
@@ -223,10 +265,9 @@ p_value
 Using the typical significance level of 0.05, we reject the null hypothesis. Given that the p-value is 0, there is strong evidence that the majority of #1 Billboard songs are of the pop genre. 
 
 
-**ask Professor Smith This: why 98 confidence interval over other intervals?**
-To verify our conclusion from above, we also decided to perform a confidence interval Test. Since our p-value is 0, we decided to do a 99% confidence interval test since that would give us less precision but a greater likelihood of containing our true proportion. 
+To verify our conclusion from above, we also decided to perform a confidence interval Test. We decided to do a 95% confidence interval test since that seems to be the typical confidence interval.  
 
-```{r create-bootstrap}
+```{r create-bootstrap, echo= FALSE}
 set.seed(2)
 boot_dist <- combined_1 %>%
   specify(response= is_pop, success= "Yes") %>%
@@ -235,73 +276,18 @@ boot_dist <- combined_1 %>%
 
 ```
 
-```{r CI-test}
+```{r CI-test, echo= FALSE}
 CI <- boot_dist %>%
-  summarize(lower= quantile(stat, 0.01), 
-            upper= quantile(stat, 0.99))
+  summarize(lower= quantile(stat, 0.025), 
+            upper= quantile(stat, 0.975))
 
 CI
 ```
-We are 98% confident that the proportion of #1 Billboard songs that are of the pop genre is between 0.884 and 0.925. Since this interval does not have 0.5 between it, we reject our null hypothesis, further providing evidence that the majority of #1 Billboard songs are of the pop genre. 
+We are 95% confident that the proportion of #1 Billboard songs that are of the pop genre is between 0.89 and 0.92. Since this interval does not have 0.5 between it, we reject our null hypothesis, further providing evidence that the majority of #1 Billboard songs are of the pop genre. 
 
-## Testing Predictors
-linear models
-To further examine the relationship between attributes and the weekly position of songs on the Billboard top 100, we decided to use linear regression. We thought that it would be interesting to observe which attribute is the strongest predictor of a song doing well on the Billboard. To do this we decided to test with logistic regression how the attributes; danceability, energy, speechiness, valence, and tempo predicted how well a song would do in becoming #1 on the Billboard charts.
 
-First, we will show how the attribute danceability impacts the weekly position of a song. 
 
-```{r danceability linear-model}
-danceability_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ danceability, data = combined)
-tidy(danceability_model)
-```
+## Conclusion
 
-```{r Energy Linear Model}
-energy_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ energy, data = combined)
-tidy(energy_model)
-```
-
-```{r Speechiness Linear Model}
-speechiness_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ speechiness, data = combined)
-tidy(speechiness_model)
-```
-
-```{r Valence Linear Model}
-valence_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ valence, data = combined)
-tidy(valence_model)
-```
-
-```{r Tempo Linear Model}
-tempo_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ tempo, data = combined)
-tidy(tempo_model)
-```
-
-```{r Overall Linear Model}
-overall_model <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(week_position ~ danceability + energy + speechiness + valence + tempo, data = combined)
-tidy(overall_model)
-```
-
-Calculation of $R^2$ Values of the different predictors.
-
-```{r r-squared-values}
-glance(danceability_model)$r.squared
-glance(energy_model)$r.squared
-glance(speechiness_model)$r.squared
-glance(valence_model)$r.squared
-glance(tempo_model)$r.squared
-glance(overall_model)$r.squared
-```
-*Insert Discussion*
-Talk about other factors that make a song popular that are influential such as social media or there is not variable called catchiness which could show how catchy a song is.
+Need to add: This will require a summary of what you have learned about your research question along with statistical arguments supporting your conclusions. You should critique your own methods and provide suggestions for improving your analysis and future work. Issues pertaining to the reliability and validity of your data and the appropriateness of the statistical analyses should also be discussed. Also include a brief paragraph on what you would do differently if you were able to start over with the project.
 
