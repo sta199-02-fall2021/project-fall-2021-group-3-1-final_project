@@ -95,11 +95,21 @@ combined %>%
        x = "Speechiness", y = "Weekly Position") +
   theme(plot.title = element_text(size = 8), 
         plot.subtitle = element_text(size = 6))
+
+combined %>%
+  ggplot(mapping = aes(x = energy, y = week_position)) +
+  geom_hex() + 
+  labs(title = "How Does Energy affect the 
+       Weekly Position of a Song?", 
+       subtitle = "Figure 1.E",
+       x = "Energy", y = "Weekly Position") +
+  theme(plot.title = element_text(size = 8), 
+        plot.subtitle = element_text(size = 6))
 ```
 
-When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability (figure 1.A) seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher, but the visual pattern isn't remarkable. Valence (figure 1.B) appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo (figure 1.C) is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Finally, speechiness (figure 1.D) seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association.
+When examining the graphs, we know there will be an even distribution of data along the y-axis, since there is one #1 song, #100 song, and everything in between from each week. If there is an association between variables, though, there would be non-vertical patterns in the data. Danceability (figure 1.A) seems like it may be slightly curved to the right as y approaches 0, which could suggest that more danceable songs tend to rank higher. Valence (figure 1.B) appears to have no pattern at all, whereas songs seem to for the most part have danceablilty in the 0.5 to 0.75 range, the valence chart has songs in all areas of the graph. Once again, this doesn't display a perceivable association. Tempo (figure 1.C) is similar, with two vertical-shaped light streaks suggesting that many songs, regardless of rank, have tempos around 100 and 120. Speechiness (figure 1.D) seems to be a variable that is centered close to 0 regardless of rank, which again suggests no perceivable association. Similarly, for energy (figure 1.E), regardless of weekly position, the range of energy for songs seem to be fall between 0.5 and 0.9. There seems to be a small cluster of high ranking songs whose energy level is at 0.75, but the visual pattern isn't that stark. 
 
-At this point, it does not seem likely that song attributes are valuable predictors of song rank. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, we used linear regression.
+At this point, it does not seem likely that song attributes are valuable predictors of song rank/ weekly position. However, there is a lot of data displayed here, so much so that the graphs have points in a majority of the hexbins available. This could make it harder for us as humans simply looking out a plot to observe a relationships between song position and audio variables that may be hiding in the data. To investigate this, we used linear regression.
 
 ## Testing Predictors
 
